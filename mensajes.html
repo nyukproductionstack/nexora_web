@@ -1,757 +1,791 @@
-
 <!DOCTYPE html>
+<!-- NEXORA build 2026-11-14 -->
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mensajes | NEXORA</title>
+    <title>Mensajes | NEXORA</title>
+    <script>(function(){var s=null;try{s=sessionStorage.getItem('sesionNexora')||localStorage.getItem('sesionNexora')}catch(e){}if(!s){location.replace('login.html')}})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#1F5A5A">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231F5A5A'/%3E%3Ctext x='32' y='45' font-size='38' font-weight='800' text-anchor='middle' font-family='Arial' fill='white'%3EN%3C/text%3E%3Ccircle cx='50' cy='46' r='5' fill='%23D98E5B'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+/* =========================================================
+   NEXORA · Sistema de diseño
+   ========================================================= */
+:root{
+  --verde:#1F5A5A; --verde-700:#174646; --verde-600:#276B6B; --verde-100:#D9E8E6; --verde-50:#EDF4F2;
+  --terracota:#D98E5B; --terracota-600:#C27846; --terracota-100:#F8E6D9;
+  --crema:#F6F1E9; --crema-2:#EFE8DB; --blanco:#fff;
+  --oscuro:#263535; --muted:#6B7C7A; --line:#E6DFD3;
+  --ok:#2E8B57; --error:#B54735; --error-bg:#FBEAE6;
+  --r-sm:10px; --r:16px; --r-lg:24px;
+  --sh-sm:0 1px 2px rgba(31,90,90,.06),0 2px 8px rgba(31,90,90,.05);
+  --sh:0 8px 28px rgba(31,90,90,.10);
+  --sh-lg:0 24px 60px rgba(31,90,90,.18);
+  --nav-h:68px;
+  --ease:cubic-bezier(.22,.8,.3,1);
+  --font:'DM Sans',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:clip}
+body{font-family:var(--font);background:var(--crema);color:var(--oscuro);line-height:1.6;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;overflow-x:clip}
+main{flex:1}
+img{max-width:100%;display:block}
+a{color:var(--verde);text-decoration:none}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+h1,h2,h3,h4{line-height:1.2;letter-spacing:-.02em;color:var(--verde)}
+:focus-visible{outline:3px solid rgba(217,142,91,.55);outline-offset:2px;border-radius:6px}
+::selection{background:var(--terracota);color:#fff}
+.muted{color:var(--muted)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.container{width:min(1180px,100% - 2*clamp(16px,4vw,40px));margin-inline:auto}
 
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
+/* ---------- Animaciones ---------- */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes pop{0%{transform:scale(.9);opacity:0}60%{transform:scale(1.04)}100%{transform:scale(1);opacity:1}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes blob{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(30px,-24px) scale(1.12)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes dots{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1);opacity:1}}
+@keyframes toastIn{from{opacity:0;transform:translateY(16px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes shine{to{background-position:200% 0}}
+.anim-up{animation:fadeUp .7s var(--ease) both}
+.d1{animation-delay:.08s}.d2{animation-delay:.16s}.d3{animation-delay:.24s}.d4{animation-delay:.32s}
+.js .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease),transform .7s var(--ease);transition-delay:var(--d,0s)}
+.js .reveal.in{opacity:1;transform:none}
+.page-enter{animation:fadeUp .55s var(--ease) both}
+.shake{animation:shake .45s}
+
+/* ---------- Botones ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:12px;border:2px solid transparent;font-weight:700;font-size:.95rem;line-height:1.2;transition:transform .25s var(--ease),box-shadow .25s,background .25s,color .25s,border-color .25s;position:relative;white-space:nowrap}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(0) scale(.98)}
+.btn-primary{background:var(--verde);color:#fff;box-shadow:0 6px 16px rgba(31,90,90,.25)}
+.btn-primary:hover{background:var(--verde-700);box-shadow:0 10px 24px rgba(31,90,90,.32)}
+.btn-accent{background:var(--terracota);color:#fff;box-shadow:0 6px 16px rgba(217,142,91,.35)}
+.btn-accent:hover{background:var(--terracota-600)}
+.btn-outline{background:transparent;border-color:var(--verde);color:var(--verde)}
+.btn-outline:hover{background:var(--verde);color:#fff}
+.btn-ghost{background:var(--verde-50);color:var(--verde)}
+.btn-ghost:hover{background:var(--verde-100)}
+.btn-light{background:#fff;color:var(--verde)}
+.btn-light:hover{background:var(--crema)}
+.btn-sm{padding:8px 14px;font-size:.85rem;border-radius:10px}
+.btn-block{width:100%}
+.btn[disabled],.btn.is-done{opacity:.75;cursor:default;transform:none;box-shadow:none}
+.btn.is-done{background:var(--verde-100);color:var(--verde);border-color:transparent}
+.btn.loading{pointer-events:none;color:transparent!important}
+.btn.loading::after{content:"";position:absolute;width:20px;height:20px;border:3px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+
+/* ---------- Barra superior ---------- */
+.topbar{position:sticky;top:0;z-index:50;height:var(--nav-h);background:rgba(255,255,255,.86);backdrop-filter:saturate(1.6) blur(14px);-webkit-backdrop-filter:saturate(1.6) blur(14px);border-bottom:1px solid transparent;transition:border-color .3s,box-shadow .3s}
+.topbar.scrolled{border-color:var(--line);box-shadow:0 4px 18px rgba(31,90,90,.07)}
+.topbar .container{height:100%;display:flex;align-items:center;gap:20px}
+.logo{font-size:1.65rem;font-weight:800;letter-spacing:-.05em;color:var(--verde)}
+.logo span{color:var(--terracota)}
+.nav-links{display:flex;align-items:center;gap:4px;margin-left:auto}
+.nav-links a{padding:9px 14px;border-radius:10px;font-weight:600;font-size:.92rem;color:#4E5C5C;transition:background .2s,color .2s;position:relative}
+.nav-links a:hover{background:var(--verde-50);color:var(--verde)}
+.nav-links a.active{color:var(--verde);background:var(--verde-50)}
+.nav-links a.active::after{content:"";position:absolute;left:14px;right:14px;bottom:3px;height:2px;border-radius:2px;background:var(--terracota)}
+.nav-links>.btn{margin-left:8px;color:#fff}
+.nav-links>.btn:hover{background:var(--verde-700);color:#fff}
+.nav-user{display:flex;align-items:center;gap:10px;margin-left:8px;padding-left:14px;border-left:1px solid var(--line)}
+.nav-user .name{font-weight:700;font-size:.9rem;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav-toggle{display:none;margin-left:auto;width:44px;height:44px;border:0;background:var(--verde-50);border-radius:12px;align-items:center;justify-content:center;flex-direction:column;gap:5px}
+.nav-toggle span{display:block;width:20px;height:2px;background:var(--verde);border-radius:2px;transition:transform .3s var(--ease),opacity .2s}
+.nav-toggle[aria-expanded=true] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-toggle[aria-expanded=true] span:nth-child(2){opacity:0}
+.nav-toggle[aria-expanded=true] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media(max-width:980px){
+  .nav-toggle{display:flex}
+  .nav-links{position:fixed;inset:var(--nav-h) 0 auto 0;margin:0;flex-direction:column;align-items:stretch;gap:2px;background:#fff;padding:14px clamp(16px,4vw,40px) 22px;border-bottom:1px solid var(--line);box-shadow:var(--sh);transform:translateY(-12px);opacity:0;visibility:hidden;transition:opacity .25s,transform .3s var(--ease),visibility .3s;max-height:calc(100vh - var(--nav-h));overflow:auto}
+  .nav-links.open{opacity:1;transform:none;visibility:visible}
+  .nav-links a{padding:13px 14px;font-size:1rem}
+  .nav-links a.active::after{display:none}
+  .nav-links>.btn{margin:8px 0 0}
+  .nav-user{margin:10px 0 0;padding:14px 4px 0;border-left:0;border-top:1px solid var(--line)}
+  .nav-user .name{max-width:none;flex:1}
 }
 
-body {
-    background: #F6F1E9 url("imagen/fondo-mensajes.png") center/cover fixed no-repeat;
-    color: #263535;
-    min-height: 100vh;
+/* ---------- Avatares ---------- */
+.avatar{width:48px;height:48px;flex:none;border-radius:50%;background:linear-gradient(135deg,var(--verde),var(--verde-600));color:#fff;display:grid;place-items:center;font-weight:800;font-size:1.1rem;overflow:hidden;border:2px solid #fff;box-shadow:var(--sh-sm)}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.avatar-sm{width:36px;height:36px;font-size:.9rem}
+.avatar-lg{width:96px;height:96px;font-size:2.2rem;border-width:4px}
+
+/* ---------- Tarjetas y formularios ---------- */
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:clamp(18px,2.4vw,26px);box-shadow:var(--sh-sm);transition:transform .3s var(--ease),box-shadow .3s}
+.card.hover:hover{transform:translateY(-4px);box-shadow:var(--sh)}
+.card h2{font-size:1.2rem;margin-bottom:8px}
+.card h3{font-size:1.05rem}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.field label,.label{font-weight:700;font-size:.88rem;color:var(--oscuro)}
+.input,input[type=text],input[type=email],input[type=password],input[type=search],select,textarea{width:100%;padding:12px 14px;border:1.5px solid var(--line);background:#FDFCFA;border-radius:12px;transition:border-color .2s,box-shadow .2s,background .2s}
+textarea{resize:vertical;min-height:110px}
+input:focus,select:focus,textarea:focus{outline:0;border-color:var(--verde);background:#fff;box-shadow:0 0 0 4px rgba(31,90,90,.12)}
+::placeholder{color:#9AA7A5}
+.form-msg{min-height:22px;font-size:.9rem;font-weight:600;margin-top:10px}
+.form-msg.error{color:var(--error)}.form-msg.ok{color:var(--ok)}
+.pw{position:relative}
+.pw input{padding-right:84px}
+.pw button{position:absolute;right:8px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--verde);font-weight:700;font-size:.82rem;padding:8px 10px;border-radius:8px}
+.pw button:hover{background:var(--verde-50)}
+.row{display:grid;gap:16px;grid-template-columns:1fr 1fr}
+@media(max-width:620px){.row{grid-template-columns:1fr}}
+
+/* ---------- Componentes ---------- */
+.badge{display:inline-block;padding:4px 11px;border-radius:99px;font-size:.76rem;font-weight:700;background:var(--verde-50);color:var(--verde)}
+.badge.accent{background:var(--terracota-100);color:#9A5527}
+.eyebrow{display:inline-block;font-size:.78rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--terracota-600)}
+.empty{padding:34px 20px;text-align:center;color:var(--muted);background:#fff;border:2px dashed var(--line);border-radius:var(--r)}
+.empty .ico{font-size:2rem;display:block;margin-bottom:6px}
+.progress{height:8px;border-radius:99px;background:var(--verde-100);overflow:hidden}
+.progress i{display:block;height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,var(--verde),var(--terracota));transition:width 1s var(--ease)}
+.tabs{display:inline-flex;gap:4px;background:#fff;border:1px solid var(--line);padding:4px;border-radius:12px;margin-bottom:16px}
+.tabs button{border:0;background:transparent;padding:8px 16px;border-radius:9px;font-weight:700;font-size:.88rem;color:var(--muted);transition:all .2s}
+.tabs button.active{background:var(--verde);color:#fff}
+.skeleton{background:linear-gradient(90deg,#eee 25%,#f7f7f7 50%,#eee 75%);background-size:200% 100%;animation:shine 1.4s linear infinite;border-radius:8px}
+#toasts{position:fixed;right:18px;bottom:18px;z-index:200;display:flex;flex-direction:column;gap:10px;pointer-events:none}
+.toast{pointer-events:auto;min-width:240px;max-width:min(360px,calc(100vw - 36px));background:var(--oscuro);color:#fff;padding:13px 18px;border-radius:14px;box-shadow:var(--sh-lg);font-weight:600;font-size:.92rem;animation:toastIn .4s var(--ease) both;border-left:5px solid var(--terracota)}
+.toast.ok{border-left-color:#54C08A}.toast.error{border-left-color:#F0836F}
+.toast.out{opacity:0;transform:translateY(10px);transition:all .3s}
+
+/* ---------- Estructura de páginas internas ---------- */
+.page{padding-block:clamp(24px,4vw,44px) 56px}
+.page-head{margin-bottom:26px}
+.page-head h1{font-size:clamp(1.7rem,3.6vw,2.4rem)}
+.page-head p{color:var(--muted);max-width:720px;margin-top:6px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;align-items:start}
+.layout aside{display:flex;flex-direction:column;gap:18px;position:sticky;top:calc(var(--nav-h) + 18px)}
+.stack{display:flex;flex-direction:column;gap:18px}
+@media(max-width:980px){.layout{grid-template-columns:1fr}.layout aside{position:static}}
+.app-footer{padding:22px;text-align:center;color:var(--muted);font-size:.88rem;border-top:1px solid var(--line);background:#fff}
+
+/* =========================================================
+   PÁGINA PÚBLICA (index)
+   ========================================================= */
+.hero{position:relative;overflow:hidden;padding-block:clamp(40px,7vw,96px)}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;z-index:0;animation:blob 14s ease-in-out infinite}
+.blob.a{width:420px;height:420px;background:var(--terracota-100);top:-120px;right:-100px}
+.blob.b{width:360px;height:360px;background:var(--verde-100);bottom:-140px;left:-120px;animation-delay:-6s}
+.hero .container{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,5vw,64px);align-items:center}
+.hero h1{font-size:clamp(2.3rem,5.6vw,4.2rem);margin:14px 0 18px}
+.hero h1 em{font-style:normal;color:var(--terracota)}
+.hero p.lead{font-size:clamp(1rem,1.5vw,1.15rem);color:#4E5C5C;max-width:540px}
+.hero-btns{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
+.hero-img{position:relative}
+.hero-img img{border-radius:var(--r-lg);box-shadow:var(--sh-lg);animation:float 7s ease-in-out infinite;aspect-ratio:16/10;object-fit:cover;width:100%}
+.hero-img .chip{position:absolute;background:#fff;padding:10px 16px;border-radius:14px;box-shadow:var(--sh);font-weight:700;font-size:.85rem;display:flex;align-items:center;gap:8px;animation:float 6s ease-in-out infinite}
+.hero-img .chip.c1{left:-14px;bottom:26px;animation-delay:-2s}
+.hero-img .chip.c2{right:-10px;top:24px;animation-delay:-4s}
+@media(max-width:900px){.hero .container{grid-template-columns:1fr;text-align:center}.hero p.lead{margin-inline:auto}.hero-btns{justify-content:center}.hero-img .chip.c1{left:6px}.hero-img .chip.c2{right:6px}}
+.section{padding-block:clamp(44px,7vw,88px)}
+.section-head{text-align:center;max-width:680px;margin:0 auto 44px}
+.section-head h2{font-size:clamp(1.7rem,3.4vw,2.5rem);margin:10px 0 12px}
+.section-head p{color:var(--muted)}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.feature{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:28px;transition:transform .35s var(--ease),box-shadow .35s,border-color .35s}
+.feature:hover{transform:translateY(-8px);box-shadow:var(--sh);border-color:var(--terracota)}
+.feature .ico{width:54px;height:54px;border-radius:16px;background:var(--verde-50);display:grid;place-items:center;font-size:1.6rem;margin-bottom:16px;transition:transform .4s var(--ease),background .3s}
+.feature:hover .ico{transform:rotate(-8deg) scale(1.1);background:var(--terracota-100)}
+.feature h3{font-size:1.15rem;margin-bottom:8px}
+.feature p{color:var(--muted);font-size:.95rem}
+.about{background:#fff}
+.about .wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,60px);align-items:center}
+.about p{color:#4E5C5C;margin-bottom:14px}
+.about .img{border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh);aspect-ratio:16/10}
+.about .img img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.about .img:hover img{transform:scale(1.06)}
+@media(max-width:860px){.about .wrap{grid-template-columns:1fr}}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;counter-reset:s}
+.step{position:relative;padding:28px 24px 24px;background:#fff;border-radius:var(--r);border:1px solid var(--line);counter-increment:s}
+.step::before{content:counter(s);position:absolute;top:-18px;left:24px;width:38px;height:38px;border-radius:50%;background:var(--terracota);color:#fff;font-weight:800;display:grid;place-items:center;box-shadow:0 6px 14px rgba(217,142,91,.4)}
+.step h3{margin-bottom:6px}.step p{color:var(--muted);font-size:.95rem}
+.cta{margin:0 clamp(16px,4vw,40px);border-radius:var(--r-lg);padding:clamp(40px,6vw,72px) 24px;text-align:center;color:#fff;background:linear-gradient(135deg,var(--verde),var(--verde-700));position:relative;overflow:hidden}
+.cta::before{content:"";position:absolute;width:340px;height:340px;border-radius:50%;background:rgba(217,142,91,.25);top:-140px;right:-80px;filter:blur(10px)}
+.cta h2{color:#fff;font-size:clamp(1.6rem,3.4vw,2.4rem);position:relative}
+.cta p{opacity:.9;margin:12px auto 26px;max-width:560px;position:relative}
+.cta .btn{position:relative}
+.site-footer{margin-top:60px;padding:28px 20px;text-align:center;color:var(--muted);font-size:.9rem;background:#fff;border-top:1px solid var(--line)}
+
+/* =========================================================
+   LOGIN / REGISTRO
+   ========================================================= */
+.auth-body{background:var(--crema);position:relative;overflow-x:clip}
+.auth-body>.blob{position:fixed}
+.auth-body .blob.a{top:auto;bottom:-160px;right:-120px}
+.auth{position:relative;z-index:1;min-height:calc(100vh - var(--nav-h));display:grid;grid-template-columns:1fr minmax(360px,460px);gap:clamp(24px,6vw,90px);align-items:center;padding-block:clamp(24px,5vw,56px)}
+.auth-info h1{font-size:clamp(2rem,4.2vw,3.2rem);margin:12px 0 16px}
+.auth-info>p{color:#4E5C5C;max-width:520px}
+.benefits{margin-top:26px;display:flex;flex-direction:column;gap:12px}
+.benefit{display:flex;align-items:center;gap:12px;color:#4E5C5C;font-weight:500}
+.benefit i{font-style:normal;flex:none;width:28px;height:28px;border-radius:50%;background:var(--verde-100);color:var(--verde);display:grid;place-items:center;font-weight:800;font-size:.8rem}
+.auth-card{background:#fff;border-radius:var(--r-lg);padding:clamp(24px,4vw,40px);box-shadow:var(--sh-lg);border:1px solid var(--line);animation:pop .6s var(--ease) both}
+.auth-head{text-align:center;margin-bottom:24px}
+.auth-icon{width:56px;height:56px;border-radius:16px;margin:0 auto 12px;background:linear-gradient(135deg,var(--verde),var(--verde-600));color:#fff;display:grid;place-items:center;font-size:1.5rem;font-weight:800;box-shadow:0 10px 22px rgba(31,90,90,.3)}
+.auth-head h2{font-size:1.7rem}.auth-head p{color:var(--muted);font-size:.95rem}
+.opts{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin:-4px 0 18px;font-size:.88rem}
+.opts label{display:flex;align-items:center;gap:8px;color:var(--muted);cursor:pointer}
+.opts input{width:auto;accent-color:var(--verde)}
+.opts a{font-weight:700}
+.divider{display:flex;align-items:center;gap:12px;margin:22px 0 16px;color:var(--muted);font-size:.88rem}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--line)}
+.demo-box{margin-top:16px;padding:12px 14px;border-radius:12px;background:var(--terracota-100);color:#7a4219;font-size:.85rem;display:flex;gap:10px;align-items:center;justify-content:space-between}
+.demo-box button{border:0;background:#fff;color:var(--terracota-600);font-weight:700;border-radius:8px;padding:6px 12px;font-size:.8rem}
+.strength{display:flex;gap:5px;margin-top:8px}
+.strength i{flex:1;height:5px;border-radius:4px;background:var(--line);transition:background .3s}
+.strength[data-s="1"] i:nth-child(-n+1){background:#D9604C}
+.strength[data-s="2"] i:nth-child(-n+2){background:var(--terracota)}
+.strength[data-s="3"] i:nth-child(-n+3){background:#B5C25A}
+.strength[data-s="4"] i{background:var(--ok)}
+.strength-label{font-size:.78rem;color:var(--muted);margin-top:4px;min-height:18px}
+.auth-terms{margin-top:16px;text-align:center;font-size:.78rem;color:var(--muted)}
+@media(max-width:860px){.auth{grid-template-columns:1fr}.auth-info{display:none}}
+
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
+.dash{display:grid;grid-template-columns:270px minmax(0,1fr) 310px;gap:22px;align-items:start}
+.dash aside{display:flex;flex-direction:column;gap:18px;position:sticky;top:calc(var(--nav-h) + 18px)}
+@media(max-width:1100px){.dash{grid-template-columns:250px minmax(0,1fr)}.dash .right{grid-column:1/-1;position:static;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}}
+@media(max-width:820px){.dash{grid-template-columns:1fr}.dash aside{position:static}.dash .side-menu{display:none}}
+.me-card{text-align:center;padding:0;overflow:hidden}
+.me-cover{height:78px;background:linear-gradient(120deg,var(--verde),var(--terracota))}
+.me-card .avatar-lg{margin:-48px auto 8px}
+.me-card .body{padding:0 20px 22px}
+.me-stats{display:grid;grid-template-columns:repeat(3,1fr);margin:16px 0;padding-block:12px;border-block:1px solid var(--line)}
+.me-stats strong{display:block;font-size:1.3rem;color:var(--verde)}
+.me-stats span{font-size:.74rem;color:var(--muted)}
+.side-menu{display:flex;flex-direction:column;padding:10px}
+.side-menu a{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;font-weight:600;color:#4E5C5C;transition:all .2s}
+.side-menu a:hover{background:var(--verde-50);color:var(--verde);transform:translateX(4px)}
+.side-menu a.active{background:var(--verde);color:#fff}
+.welcome{background:linear-gradient(135deg,var(--verde),var(--verde-700));color:#fff;border:0;position:relative;overflow:hidden}
+.welcome::after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:rgba(217,142,91,.28);right:-60px;top:-80px}
+.welcome h1{color:#fff;font-size:clamp(1.5rem,3vw,2rem);position:relative}
+.welcome p{opacity:.9;margin:8px 0 18px;position:relative;max-width:520px}
+.quick{display:flex;flex-wrap:wrap;gap:10px;position:relative}
+.quick a{background:rgba(255,255,255,.15);color:#fff;padding:10px 16px;border-radius:12px;font-weight:700;font-size:.9rem;transition:background .2s,transform .2s}
+.quick a:hover{background:rgba(255,255,255,.28);transform:translateY(-2px)}
+.person-mini{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.person-mini:last-of-type{border-bottom:0}
+.person-mini .info{flex:1;min-width:0}
+.person-mini strong{display:block;font-size:.92rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.person-mini span{font-size:.8rem;color:var(--muted)}
+.link-more{display:inline-block;margin-top:10px;font-weight:700;font-size:.9rem}
+.link-more:hover{color:var(--terracota-600)}
+
+/* ---------- Publicaciones ---------- */
+.composer textarea{min-height:96px}
+.composer .bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;flex-wrap:wrap}
+.counter{font-size:.82rem;color:var(--muted)}
+.counter.warn{color:var(--error);font-weight:700}
+.post{padding:20px;animation:fadeUp .5s var(--ease) both}
+.post-head{display:flex;gap:12px;align-items:center;margin-bottom:12px}
+.post-head h3{font-size:1rem}
+.post-head p,.post-head small{color:var(--muted);font-size:.82rem;display:block;line-height:1.3}
+.post-head .grow{flex:1;min-width:0}
+.post-body{white-space:pre-wrap;word-wrap:break-word;overflow-wrap:anywhere;margin-bottom:14px}
+.post-actions{display:flex;gap:8px;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--line)}
+.pbtn{border:0;background:transparent;padding:8px 14px;border-radius:10px;font-weight:700;font-size:.86rem;color:var(--muted);transition:all .2s}
+.pbtn:hover{background:var(--verde-50);color:var(--verde)}
+.pbtn.liked{color:#C9473A;background:#FBEAE6}
+.pbtn.liked .heart{display:inline-block;animation:pop .4s var(--ease)}
+.pbtn.danger:hover{background:var(--error-bg);color:var(--error)}
+.comments{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s var(--ease)}
+.comments.open{grid-template-rows:1fr}
+.comments>div{overflow:hidden}
+.comments .inner{padding-top:14px}
+.comment{background:var(--crema);padding:10px 14px;border-radius:12px;margin-bottom:8px;font-size:.92rem;animation:fadeIn .3s both}
+.comment b{display:block;font-size:.82rem;color:var(--verde)}
+.comment-form{display:flex;gap:8px;margin-top:6px}
+@media(max-width:480px){.comment-form{flex-direction:column}}
+
+/* ---------- Perfil ---------- */
+.profile-hero{padding:0;overflow:hidden}
+.profile-hero .cover{height:130px;background:linear-gradient(120deg,var(--verde),var(--verde-600) 55%,var(--terracota))}
+.profile-hero .inner{display:flex;gap:22px;align-items:flex-end;padding:0 clamp(18px,3vw,32px) 24px;margin-top:-52px;flex-wrap:wrap}
+.profile-hero .avatar-lg{width:112px;height:112px}
+.photo-btn{position:relative;display:inline-block;cursor:pointer}
+.photo-btn .cam{position:absolute;right:-2px;bottom:2px;width:34px;height:34px;border-radius:50%;background:var(--terracota);color:#fff;display:grid;place-items:center;font-size:1rem;border:3px solid #fff;transition:transform .25s var(--ease)}
+.photo-btn:hover .cam{transform:scale(1.15) rotate(8deg)}
+.profile-hero h1{font-size:clamp(1.4rem,3vw,2rem)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.tag{padding:5px 12px;border-radius:99px;background:var(--verde-50);color:var(--verde);font-size:.82rem;font-weight:700;animation:pop .4s var(--ease) both}
+.complete{display:flex;align-items:center;gap:14px;margin-top:16px}
+.complete .progress{flex:1}
+.complete b{font-size:.85rem;color:var(--verde)}
+
+/* ---------- Networking ---------- */
+.search{position:relative;margin-bottom:20px}
+.search input{padding-left:44px;height:50px;background:#fff}
+.search::before{content:"⌕";position:absolute;left:16px;top:50%;transform:translateY(-52%);font-size:1.4rem;color:var(--muted)}
+.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px}
+.person{display:flex;flex-direction:column;gap:14px}
+.person-top{display:flex;gap:14px;align-items:center}
+.person-top h3{font-size:1.05rem}
+.person-top p{color:var(--muted);font-size:.88rem}
+.person .desc{color:#4E5C5C;font-size:.92rem;flex:1}
+.person .actions{display:flex;gap:8px;flex-wrap:wrap}
+.person .actions .btn{flex:1}
+.req{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:.9rem}
+.req:last-child{border:0}
+
+/* ---------- Eventos ---------- */
+.filters{display:grid;grid-template-columns:1fr 220px;gap:12px;margin-bottom:20px}
+@media(max-width:560px){.filters{grid-template-columns:1fr}}
+.event{display:grid;grid-template-columns:78px 1fr;gap:18px;margin-bottom:18px}
+.date-box{background:linear-gradient(160deg,var(--verde),var(--verde-700));color:#fff;border-radius:16px;text-align:center;padding:12px 6px;align-self:start}
+.date-box b{display:block;font-size:1.9rem;line-height:1}
+.date-box span{font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;opacity:.85}
+.event h3{font-size:1.2rem;margin:8px 0 6px}
+.event p{color:#4E5C5C;font-size:.94rem}
+.event .meta{display:flex;flex-wrap:wrap;gap:6px 18px;margin:12px 0;font-size:.85rem;color:var(--muted)}
+.event .meta b{color:var(--oscuro)}
+.event .actions{display:flex;gap:10px;flex-wrap:wrap}
+.detail{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s var(--ease)}
+.detail.open{grid-template-rows:1fr}
+.detail>div{overflow:hidden}
+.detail .box{margin-top:14px;padding:14px 16px;border-radius:12px;background:var(--crema);font-size:.9rem;line-height:1.8}
+@media(max-width:520px){.event{grid-template-columns:1fr}.date-box{display:flex;gap:10px;align-items:baseline;justify-content:center;padding:8px}.date-box b{font-size:1.3rem}}
+
+/* ---------- Mensajes ---------- */
+.chat{display:grid;grid-template-columns:330px minmax(0,1fr);height:min(640px,calc(100vh - var(--nav-h) - 170px));min-height:480px;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh-sm)}
+.contacts{border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0}
+.contacts-head{padding:18px;border-bottom:1px solid var(--line)}
+.contacts-head h2{font-size:1.15rem;margin-bottom:10px}
+.contact-list{overflow:auto;flex:1}
+.contact{display:flex;gap:12px;align-items:center;padding:14px 18px;cursor:pointer;border-left:4px solid transparent;transition:background .2s}
+.contact:hover{background:var(--verde-50)}
+.contact.active{background:var(--verde-50);border-left-color:var(--terracota)}
+.contact .info{min-width:0;flex:1}
+.contact h3{font-size:.95rem}
+.contact p{font-size:.82rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.conv{display:flex;flex-direction:column;min-height:0;min-width:0;background:var(--crema) center/cover}
+.conv-head{display:flex;align-items:center;gap:12px;padding:14px 18px;background:#fff;border-bottom:1px solid var(--line)}
+.conv-head h2{font-size:1.05rem}.conv-head p{font-size:.82rem;color:var(--muted)}
+.back{display:none;border:0;background:var(--verde-50);width:38px;height:38px;border-radius:10px;font-size:1.2rem;color:var(--verde)}
+.msgs{flex:1;overflow:auto;padding:20px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:min(75%,460px);padding:10px 14px;border-radius:18px;font-size:.94rem;word-wrap:break-word;overflow-wrap:anywhere;animation:fadeUp .3s var(--ease) both;box-shadow:var(--sh-sm)}
+.msg time{display:block;font-size:.7rem;opacity:.65;margin-top:2px;text-align:right}
+.msg.sent{align-self:flex-end;background:var(--verde);color:#fff;border-bottom-right-radius:5px}
+.msg.recv{align-self:flex-start;background:#fff;border-bottom-left-radius:5px}
+.typing{display:flex;gap:4px;padding:13px 16px}
+.typing i{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:dots 1.1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+.msg-form{display:flex;gap:10px;padding:14px;background:#fff;border-top:1px solid var(--line)}
+.msg-form input{flex:1}
+.conv-empty{margin:auto;text-align:center;padding:30px;color:var(--muted);max-width:340px}
+.conv-empty .ico{width:84px;height:84px;margin:0 auto 14px;border-radius:50%;background:var(--verde-100);display:grid;place-items:center;font-size:2.2rem;animation:float 5s ease-in-out infinite}
+@media(max-width:760px){
+  .chat{grid-template-columns:1fr;height:calc(100vh - var(--nav-h) - 130px)}
+  .chat .conv{display:none}
+  .chat.in-conv .contacts{display:none}
+  .chat.in-conv .conv{display:flex}
+  .back{display:grid;place-items:center}
 }
 
-/* ENCABEZADO */
-
-header {
-    background: #1F5A5A;
-    color: white;
-    padding: 18px 7%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    box-shadow: 0 3px 12px rgba(0,0,0,.12);
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+  .js .reveal{opacity:1;transform:none}
 }
 
-.logo {
-    font-size: 25px;
-    font-weight: bold;
-    letter-spacing: 1px;
-}
-
-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 18px;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    font-size: 14px;
-    transition: .3s;
-}
-
-nav a:hover,
-nav a.active {
-    color: #F0B17F;
-}
-
-/* CONTENIDO PRINCIPAL */
-
-main {
-    max-width: 1200px;
-    margin: 35px auto;
-    padding: 0 20px;
-}
-
-.intro {
-    margin-bottom: 25px;
-    background: rgba(246,241,233,.94);
-    padding: 25px;
-    border-radius: 12px;
-    border-left: 5px solid #D98E5B;
-}
-
-.intro h1 {
-    color: #1F5A5A;
-    font-size: 28px;
-    margin-bottom: 9px;
-}
-
-.intro p {
-    color: #687575;
-    font-size: 14px;
-    line-height: 1.6;
-}
-
-/* CONTENEDOR DEL CHAT */
-
-.chat-container {
-    display: grid;
-    grid-template-columns: 320px 1fr;
-    min-height: 590px;
-    background: rgba(255,255,255,.98);
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 5px 25px rgba(0,0,0,.12);
-    border: 1px solid rgba(255,255,255,.8);
-}
-
-/* CONTACTOS */
-
-.contacts {
-    border-right: 1px solid #e9eeee;
-    background: white;
-}
-
-.contacts-header {
-    padding: 23px 20px;
-    border-bottom: 1px solid #eee;
-    background: #fbfaf7;
-}
-
-.contacts-header h2 {
-    color: #1F5A5A;
-    font-size: 19px;
-    margin-bottom: 15px;
-}
-
-.contacts-header p {
-    color: #829090;
-    font-size: 12px;
-    margin-bottom: 12px;
-}
-
-.contacts-header input {
-    width: 100%;
-    padding: 12px 14px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    outline: none;
-    font-size: 13px;
-    background: white;
-}
-
-.contacts-header input:focus {
-    border-color: #1F5A5A;
-    box-shadow: 0 0 0 2px rgba(31,90,90,.10);
-}
-
-.contact-list {
-    max-height: 480px;
-    overflow-y: auto;
-}
-
-.contact {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 17px 20px;
-    cursor: pointer;
-    border-bottom: 1px solid #f1f1f1;
-    transition: .2s;
-}
-
-.contact:hover,
-.contact.active {
-    background: #F3F6F3;
-    border-left: 4px solid #1F5A5A;
-}
-
-.avatar {
-    width: 47px;
-    height: 47px;
-    border-radius: 50%;
-    background: #1F5A5A;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    font-size: 18px;
-    flex-shrink: 0;
-    border: 2px solid #e4eeee;
-}
-
-.contact-info {
-    min-width: 0;
-}
-
-.contact-info h3 {
-    font-size: 14px;
-    color: #263535;
-    margin-bottom: 6px;
-}
-
-.contact-info p {
-    color: #829090;
-    font-size: 12px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 200px;
-}
-
-/* ÁREA DE CONVERSACIÓN */
-
-.chat {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    background: white;
-}
-
-.chat-header {
-    padding: 18px 23px;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    align-items: center;
-    gap: 13px;
-    background: #fff;
-}
-
-.chat-header h2 {
-    color: #1F5A5A;
-    font-size: 17px;
-    margin-bottom: 5px;
-}
-
-.chat-header p {
-    color: #829090;
-    font-size: 12px;
-}
-
-/* MENSAJES */
-
-.messages {
-    flex: 1;
-    padding: 25px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    min-height: 330px;
-    max-height: 430px;
-    background: #fcfbf8;
-}
-
-.message {
-    max-width: 75%;
-    padding: 13px 16px;
-    border-radius: 13px;
-    font-size: 14px;
-    line-height: 1.5;
-    overflow-wrap: anywhere;
-    box-shadow: 0 2px 5px rgba(0,0,0,.04);
-}
-
-.message.received {
-    background: white;
-    align-self: flex-start;
-    border: 1px solid #eee;
-    border-bottom-left-radius: 3px;
-}
-
-.message.sent {
-    background: #1F5A5A;
-    color: white;
-    align-self: flex-end;
-    border-bottom-right-radius: 3px;
-}
-
-.message-time {
-    display: block;
-    font-size: 10px;
-    margin-top: 6px;
-    opacity: .7;
-    text-align: right;
-}
-
-/* FORMULARIO */
-
-.message-form {
-    display: flex;
-    gap: 12px;
-    padding: 18px;
-    border-top: 1px solid #eee;
-    background: white;
-}
-
-.message-form input {
-    flex: 1;
-    min-width: 0;
-    padding: 13px 15px;
-    border: 1px solid #ddd;
-    border-radius: 9px;
-    outline: none;
-    font-size: 13px;
-}
-
-.message-form input:focus {
-    border-color: #1F5A5A;
-}
-
-.message-form button {
-    background: #1F5A5A;
-    color: white;
-    border: none;
-    padding: 12px 23px;
-    border-radius: 9px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: .3s;
-}
-
-.message-form button:hover {
-    background: #164444;
-}
-
-/* BIENVENIDA */
-
-.welcome {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 30px;
-    color: #829090;
-    line-height: 1.8;
-    background: #fcfbf8;
-}
-
-.welcome h2 {
-    color: #1F5A5A;
-    margin-bottom: 12px;
-    font-size: 22px;
-}
-
-.welcome p {
-    font-size: 14px;
-}
-
-.welcome-icon {
-    font-size: 48px;
-    margin-bottom: 15px;
-}
-
-.empty-contact {
-    padding: 25px 15px;
-    color: #829090;
-    font-size: 13px;
-    text-align: center;
-}
-
-/* PIE DE PÁGINA */
-
-footer {
-    text-align: center;
-    padding: 25px 15px;
-    color: #263535;
-    font-size: 12px;
-    background: rgba(246,241,233,.85);
-    margin-top: 30px;
-}
-
-/* DISEÑO RESPONSIVE */
-
-@media(max-width: 750px) {
-
-    header {
-        padding: 18px 5%;
-    }
-
-    nav {
-        gap: 12px;
-    }
-
-    nav a {
-        font-size: 13px;
-    }
-
-    main {
-        margin: 22px auto;
-    }
-
-    .intro h1 {
-        font-size: 24px;
-    }
-
-    .chat-container {
-        grid-template-columns: 1fr;
-    }
-
-    .contacts {
-        border-right: none;
-        border-bottom: 1px solid #eee;
-    }
-
-    .contact-list {
-        display: flex;
-        overflow-x: auto;
-        max-height: none;
-    }
-
-    .contact {
-        min-width: 180px;
-        padding: 14px;
-    }
-
-    .chat {
-        min-height: 500px;
-    }
-
-    .messages {
-        min-height: 300px;
-        max-height: 400px;
-        padding: 17px;
-    }
-
-    .message {
-        max-width: 88%;
-    }
-
-    .message-form {
-        padding: 12px;
-    }
-
-    .message-form button {
-        padding: 11px 15px;
-    }
-}
-</style>
+    </style>
 </head>
-
 <body>
-
-<header>
-    <div class="logo">NEXORA</div>
-
-    <nav>
+  <header class="topbar">
+    <div class="container">
+      <a href="dashboard.html" class="logo">NEXORA<span>.</span></a>
+      <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
+      <nav class="nav-links" aria-label="Principal">
         <a href="dashboard.html">Inicio</a>
         <a href="perfil.html">Mi perfil</a>
         <a href="networking.html">Networking</a>
         <a href="publicaciones.html">Publicaciones</a>
         <a href="eventos.html">Eventos</a>
-        <a href="mensajes.html" class="active">Mensajes</a>
-    </nav>
-</header>
-
-<main>
-
-    <section class="intro">
-        <h1>Mensajes</h1>
-        <p>
-            Comunícate con otros profesionales, comparte ideas
-            y mantén tus conversaciones en un solo lugar.
-        </p>
-    </section>
-
-    <section class="chat-container">
-
-        <aside class="contacts">
-
-            <div class="contacts-header">
-                <h2>Conversaciones</h2>
-                <p>Encuentra a tus contactos</p>
-
-                <input
-                    type="text"
-                    id="buscarContacto"
-                    placeholder="Buscar contacto..."
-                >
-            </div>
-
-            <div class="contact-list" id="listaContactos"></div>
-
-        </aside>
-
-        <section class="chat">
-
-            <div id="contenidoChat" class="welcome">
-                <div>
-                    <div class="welcome-icon">✉</div>
-                    <h2>Bienvenido a Mensajes</h2>
-                    <p>
-                        Selecciona un contacto para comenzar
-                        una conversación.
-                    </p>
-                </div>
-            </div>
-
-        </section>
-
-    </section>
-
-</main>
-
-<footer>
-    © 2026 NEXORA - Conectando profesionales y oportunidades.
-</footer>
-
-<script>
-
-// VALIDAR SESIÓN
-
-const sesion = JSON.parse(localStorage.getItem("sesionNexora"));
-
-if (!sesion) {
-    window.location.href = "login.html";
-}
-
-// CONTACTOS
-
-const contactos = [
-    {
-        id: "valeria",
-        nombre: "Valeria Mendoza",
-        profesion: "Diseñadora UX/UI"
-    },
-    {
-        id: "carlos",
-        nombre: "Carlos Ramírez",
-        profesion: "Desarrollador de software"
-    },
-    {
-        id: "andrea",
-        nombre: "Andrea Torres",
-        profesion: "Estudiante de Ingeniería"
-    },
-    {
-        id: "diego",
-        nombre: "Diego Fernández",
-        profesion: "Analista de datos"
-    },
-    {
-        id: "lucia",
-        nombre: "Lucía Herrera",
-        profesion: "Community Manager"
-    }
-];
-
-// CONVERSACIONES
-
-const claveMensajes = "mensajesNexora_" + sesion.correo;
-
-let conversaciones =
-    JSON.parse(localStorage.getItem(claveMensajes)) || {};
-
-let contactoActual = null;
-
-const listaContactos = document.getElementById("listaContactos");
-const contenidoChat = document.getElementById("contenidoChat");
-const buscarContacto = document.getElementById("buscarContacto");
-
-// GUARDAR MENSAJES
-
-function guardarMensajes() {
-    localStorage.setItem(
-        claveMensajes,
-        JSON.stringify(conversaciones)
-    );
-}
-
-// MOSTRAR CONTACTOS
-
-function mostrarContactos(filtro = "") {
-
-    listaContactos.innerHTML = "";
-
-    const resultados = contactos.filter(contacto =>
-        (contacto.nombre + " " + contacto.profesion)
-            .toLowerCase()
-            .includes(filtro.toLowerCase())
-    );
-
-    if (resultados.length === 0) {
-        listaContactos.innerHTML =
-            '<div class="empty-contact">No se encontraron contactos.</div>';
-        return;
-    }
-
-    resultados.forEach(contacto => {
-
-        const elemento = document.createElement("div");
-
-        elemento.className = "contact" +
-            (contactoActual === contacto.id ? " active" : "");
-
-        const mensajes = conversaciones[contacto.id] || [];
-
-        const ultimo = mensajes.length
-            ? mensajes[mensajes.length - 1].texto
-            : "Inicia una conversación";
-
-        elemento.innerHTML = `
-            <div class="avatar">
-                ${contacto.nombre.charAt(0)}
-            </div>
-
-            <div class="contact-info">
-                <h3>${contacto.nombre}</h3>
-                <p>
-                    ${ultimo.length > 27
-                        ? ultimo.substring(0, 27) + "..."
-                        : ultimo}
-                </p>
-            </div>
-        `;
-
-        elemento.addEventListener("click", () => {
-            abrirConversacion(contacto.id);
-        });
-
-        listaContactos.appendChild(elemento);
-
-    });
-}
-
-// ABRIR CONVERSACIÓN
-
-function abrirConversacion(id) {
-
-    contactoActual = id;
-
-    const contacto = contactos.find(item => item.id === id);
-
-    contenidoChat.innerHTML = `
-
-        <div class="chat-header">
-
-            <div class="avatar">
-                ${contacto.nombre.charAt(0)}
-            </div>
-
-            <div>
-                <h2>${contacto.nombre}</h2>
-                <p>${contacto.profesion}</p>
-            </div>
-
+        <a href="mensajes.html" class=active aria-current=page>Mensajes</a>
+        <div class="nav-user">
+          <div class="avatar avatar-sm" data-me-avatar>U</div>
+          <span class="name" data-me-name>Usuario</span>
+          <button class="btn btn-sm btn-outline" data-logout type="button">Salir</button>
         </div>
+      </nav>
+    </div>
+  </header>
 
-        <div class="messages" id="listaMensajes"></div>
+  <main class="container page page-enter">
+    <div class="page-head">
+      <h1>Mensajes</h1>
+      <p>Comunícate con otros profesionales y mantén tus conversaciones en un solo lugar.</p>
+    </div>
 
-        <form class="message-form" id="formMensaje">
+    <section class="chat" id="chat">
+      <aside class="contacts">
+        <div class="contacts-head">
+          <h2>Conversaciones</h2>
+          <input type="search" id="buscar" placeholder="Buscar contacto..." aria-label="Buscar contacto">
+        </div>
+        <div class="contact-list" id="contactos"></div>
+      </aside>
+      <section class="conv" id="conv" style="background-image:linear-gradient(rgba(246,241,233,.93),rgba(246,241,233,.93)),url('imagen/fondo-mensajes.png')"></section>
+    </section>
+  </main>
 
-            <input
-                type="text"
-                id="textoMensaje"
-                placeholder="Escribe un mensaje..."
-                autocomplete="off"
-            >
+  <footer class="app-footer">© 2026 NEXORA · Conectando personas y oportunidades.</footer>
+  <script>
+/* =========================================================
+   NEXORA · Núcleo compartido (almacenamiento, sesión, UI)
+   ========================================================= */
+(function () {
+  'use strict';
+  var NX = window.NX = {};
 
-            <button type="submit">Enviar</button>
+  /* ---------- Almacenamiento seguro ---------- */
+  NX.get = function (k, d) {
+    try { var v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); }
+    catch (e) { return d; }
+  };
+  NX.set = function (k, v) {
+    try { localStorage.setItem(k, JSON.stringify(v)); return true; }
+    catch (e) { return false; }
+  };
 
-        </form>
+  /* ---------- Sesión (localStorage = recordar, sessionStorage = solo esta pestaña) ---------- */
+  NX.session = function () {
+    try {
+      var s = sessionStorage.getItem('sesionNexora') || localStorage.getItem('sesionNexora');
+      return s ? JSON.parse(s) : null;
+    } catch (e) { return null; }
+  };
+  NX.login = function (ses, remember) {
+    try {
+      localStorage.removeItem('sesionNexora'); sessionStorage.removeItem('sesionNexora');
+      (remember ? localStorage : sessionStorage).setItem('sesionNexora', JSON.stringify(ses));
+    } catch (e) {}
+  };
+  NX.logout = function () {
+    try { localStorage.removeItem('sesionNexora'); sessionStorage.removeItem('sesionNexora'); } catch (e) {}
+    location.href = 'login.html';
+  };
 
-    `;
+  /* ---------- Utilidades ---------- */
+  NX.esc = function (s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  };
+  NX.initial = function (n) { return (String(n || 'U').trim().charAt(0) || 'U').toUpperCase(); };
+  NX.debounce = function (fn, ms) { var t; return function () { var a = arguments, c = this; clearTimeout(t); t = setTimeout(function () { fn.apply(c, a); }, ms || 200); }; };
+  NX.norm = function (s) { return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); };
 
-    mostrarMensajes();
+  /* Crear elementos sin innerHTML (evita XSS) */
+  NX.el = function (tag, attrs, kids) {
+    var e = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) {
+      var v = attrs[k];
+      if (v == null || v === false) return;
+      if (k === 'class') e.className = v;
+      else if (k === 'text') e.textContent = v;
+      else if (k.slice(0, 2) === 'on') e.addEventListener(k.slice(2), v);
+      else e.setAttribute(k, v === true ? '' : v);
+    });
+    (kids || []).forEach(function (c) {
+      if (c == null || c === false) return;
+      e.appendChild(typeof c === 'string' ? document.createTextNode(c) : c);
+    });
+    return e;
+  };
 
-    mostrarContactos(buscarContacto.value);
+  NX.timeAgo = function (ts) {
+    if (!ts) return '';
+    var s = Math.floor((Date.now() - ts) / 1000);
+    if (s < 45) return 'Hace un momento';
+    var m = Math.floor(s / 60); if (m < 60) return 'Hace ' + m + ' min';
+    var h = Math.floor(m / 60); if (h < 24) return 'Hace ' + h + ' h';
+    var d = Math.floor(h / 24); if (d < 7) return 'Hace ' + d + (d === 1 ? ' día' : ' días');
+    return new Date(ts).toLocaleDateString('es-PE', { day: 'numeric', month: 'short', year: 'numeric' });
+  };
 
-    document.getElementById("formMensaje")
-        .addEventListener("submit", event => {
+  /* Hash SHA-256 (contraseñas). Si el navegador no lo soporta, devuelve null */
+  NX.hash = function (txt) {
+    if (!(window.crypto && crypto.subtle && window.TextEncoder)) return Promise.resolve(null);
+    return crypto.subtle.digest('SHA-256', new TextEncoder().encode('nexora:' + txt)).then(function (b) {
+      return Array.prototype.map.call(new Uint8Array(b), function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
+    }).catch(function () { return null; });
+  };
 
-            event.preventDefault();
+  /* ---------- Avatar ---------- */
+  NX.avatar = function (nombre, foto, cls) {
+    var a = NX.el('div', { class: 'avatar' + (cls ? ' ' + cls : '') });
+    var fallback = function () { a.textContent = NX.initial(nombre); };
+    if (foto) {
+      var img = NX.el('img', { src: foto, alt: 'Foto de ' + (nombre || 'usuario'), loading: 'lazy' });
+      img.addEventListener('error', function () { a.innerHTML = ''; fallback(); });
+      a.appendChild(img);
+    } else fallback();
+    return a;
+  };
+  NX.paintAvatar = function (box, nombre, foto) {
+    if (!box) return;
+    box.innerHTML = '';
+    if (foto) {
+      var img = NX.el('img', { src: foto, alt: 'Foto de ' + nombre });
+      img.addEventListener('error', function () { box.innerHTML = ''; box.textContent = NX.initial(nombre); });
+      box.appendChild(img);
+    } else box.textContent = NX.initial(nombre);
+  };
 
-            const input = document.getElementById("textoMensaje");
+  /* ---------- Toasts ---------- */
+  NX.toast = function (msg, type) {
+    var box = document.getElementById('toasts');
+    if (!box) { box = NX.el('div', { id: 'toasts', 'aria-live': 'polite' }); document.body.appendChild(box); }
+    var t = NX.el('div', { class: 'toast ' + (type || 'ok'), role: 'status', text: msg });
+    box.appendChild(t);
+    setTimeout(function () { t.classList.add('out'); setTimeout(function () { t.remove(); }, 320); }, 3200);
+  };
 
-            const texto = input.value.trim();
+  /* ---------- Datos de ejemplo ---------- */
+  NX.SAMPLE = [
+    { id: 'valeria', nombre: 'Valeria Mendoza', profesion: 'Diseñadora UX/UI', especialidad: 'Experiencia de usuario', descripcion: 'Interesada en crear experiencias digitales accesibles y fáciles de utilizar.', foto: 'imagen/valeria_mendoza.png' },
+    { id: 'carlos', nombre: 'Carlos Ramírez', profesion: 'Desarrollador de software', especialidad: 'Desarrollo web', descripcion: 'Apasionado por la tecnología, la programación y la creación de soluciones digitales.', foto: 'imagen/carlos_ramirez.png' },
+    { id: 'andrea', nombre: 'Andrea Torres', profesion: 'Estudiante de Ingeniería', especialidad: 'Gestión de proyectos', descripcion: 'Busco compartir conocimientos y colaborar en proyectos innovadores.', foto: 'imagen/andrea_torres.png' },
+    { id: 'diego', nombre: 'Diego Fernández', profesion: 'Analista de datos', especialidad: 'Inteligencia de negocios', descripcion: 'Interesado en transformar datos en información útil para las organizaciones.', foto: 'imagen/diego_fernandez.png' },
+    { id: 'lucia', nombre: 'Lucía Herrera', profesion: 'Community Manager', especialidad: 'Marketing digital', descripcion: 'Me especializo en comunicación digital y estrategias para redes sociales.', foto: 'imagen/lucia_herrera.png' }
+  ];
 
-            if (!texto) return;
+  NX.EVENTOS = [
+    { id: 1, titulo: 'Innovación y transformación digital', categoria: 'Tecnología', fecha: '2026-12-05', hora: '10:00 a. m.', lugar: 'Lima, Perú', modalidad: 'Presencial', descripcion: 'Conoce las nuevas tendencias tecnológicas y su impacto en las organizaciones.' },
+    { id: 2, titulo: 'Emprende y desarrolla tu idea de negocio', categoria: 'Emprendimiento', fecha: '2026-12-12', hora: '03:00 p. m.', lugar: 'Evento virtual', modalidad: 'Virtual', descripcion: 'Un espacio para aprender sobre modelos de negocio, planificación y emprendimiento.' },
+    { id: 3, titulo: 'Experiencia de usuario y diseño digital', categoria: 'Diseño', fecha: '2026-12-18', hora: '09:00 a. m.', lugar: 'Lima, Perú', modalidad: 'Presencial', descripcion: 'Aprende principios de diseño centrado en las personas y creación de interfaces.' },
+    { id: 4, titulo: 'Estrategias de marketing digital', categoria: 'Marketing', fecha: '2027-01-10', hora: '04:00 p. m.', lugar: 'Evento virtual', modalidad: 'Virtual', descripcion: 'Descubre herramientas y estrategias para fortalecer la presencia digital de una marca.' }
+  ];
 
-            if (!conversaciones[contactoActual]) {
-                conversaciones[contactoActual] = [];
-            }
+  /* Perfil de un usuario registrado */
+  NX.perfil = function (correo) { return NX.get('perfilNexora_' + correo, null) || {}; };
 
-            conversaciones[contactoActual].push({
-                texto: texto,
-                remitente: "yo",
-                hora: new Date().toLocaleTimeString("es-PE", {
-                    hour: "2-digit",
-                    minute: "2-digit"
-                })
-            });
+  /* Usuario actual con perfil combinado */
+  NX.me = function () {
+    var s = NX.session(); if (!s) return null;
+    var p = NX.perfil(s.correo);
+    return {
+      correo: s.correo,
+      nombre: p.nombre || s.nombre || 'Usuario',
+      profesion: p.profesion || 'Miembro de NEXORA',
+      foto: p.foto || '',
+      perfil: p
+    };
+  };
 
-            guardarMensajes();
+  /* Personas: ejemplos + usuarios registrados (sin el usuario actual) */
+  NX.people = function () {
+    var me = NX.session();
+    var list = NX.SAMPLE.map(function (p) { return Object.assign({ key: p.nombre }, p); });
+    var users = NX.get('usuariosNexora', []);
+    var seen = {};
+    users.forEach(function (u) { if (u && u.correo) seen[u.correo.toLowerCase()] = u; });
+    try {
+      for (var i = 0; i < localStorage.length; i++) {
+        var k = localStorage.key(i);
+        if (k && k.indexOf('perfilNexora_') === 0) {
+          var c = k.replace('perfilNexora_', '').toLowerCase();
+          if (!seen[c]) seen[c] = { correo: c };
+        }
+      }
+    } catch (e) {}
+    Object.keys(seen).forEach(function (c) {
+      if (me && c === String(me.correo).toLowerCase()) return;
+      var p = NX.perfil(c), u = seen[c];
+      list.push({
+        key: c, id: c, correo: c,
+        nombre: p.nombre || u.nombre || c.split('@')[0],
+        profesion: p.profesion || 'Profesional',
+        especialidad: p.especialidad || 'Sin especialidad registrada',
+        descripcion: p.presentacion || 'Usuario registrado en la comunidad NEXORA.',
+        foto: p.foto || ''
+      });
+    });
+    return list;
+  };
 
-            mostrarMensajes();
+  /* Solicitudes de conexión (compatibles con versiones anteriores: clave = correo o nombre) */
+  NX.solicitudes = function () { var s = NX.session(); return s ? NX.get('solicitudesNexora_' + s.correo, []) : []; };
+  NX.saveSolicitudes = function (l) { var s = NX.session(); if (s) NX.set('solicitudesNexora_' + s.correo, l); };
 
-            mostrarContactos(buscarContacto.value);
+  /* ---------- Interfaz común ---------- */
+  NX.initUI = function () {
+    document.documentElement.classList.add('js');
 
-            input.value = "";
-            input.focus();
-
-        });
-
-}
-
-// MOSTRAR MENSAJES
-
-function mostrarMensajes() {
-
-    const contenedor = document.getElementById("listaMensajes");
-
-    if (!contenedor) return;
-
-    contenedor.innerHTML = "";
-
-    const mensajes = conversaciones[contactoActual] || [];
-
-    if (mensajes.length === 0) {
-
-        contenedor.innerHTML = `
-            <p style="color:#829090;text-align:center;margin:auto;">
-                Todavía no hay mensajes. ¡Envía el primero!
-            </p>
-        `;
-
-        return;
+    var bar = document.querySelector('.topbar');
+    if (bar) {
+      var onScroll = function () { bar.classList.toggle('scrolled', window.scrollY > 6); };
+      onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
     }
 
-    mensajes.forEach(mensaje => {
+    var tg = document.querySelector('.nav-toggle'), links = document.querySelector('.nav-links');
+    if (tg && links) {
+      var close = function () { links.classList.remove('open'); tg.setAttribute('aria-expanded', 'false'); };
+      tg.addEventListener('click', function () {
+        var open = links.classList.toggle('open');
+        tg.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      links.addEventListener('click', function (e) { if (e.target.closest('a')) close(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      window.addEventListener('resize', function () { if (window.innerWidth > 980) close(); });
+    }
 
-        const elemento = document.createElement("div");
+    /* Usuario en la barra */
+    var me = NX.me();
+    if (me) {
+      document.querySelectorAll('[data-me-name]').forEach(function (n) { n.textContent = me.nombre; });
+      document.querySelectorAll('[data-me-first]').forEach(function (n) { n.textContent = me.nombre.split(' ')[0]; });
+      document.querySelectorAll('[data-me-prof]').forEach(function (n) { n.textContent = me.profesion; });
+      document.querySelectorAll('[data-me-avatar]').forEach(function (n) { NX.paintAvatar(n, me.nombre, me.foto); });
+    }
+    document.querySelectorAll('[data-logout]').forEach(function (b) { b.addEventListener('click', NX.logout); });
 
-        elemento.className = "message " +
-            (mensaje.remitente === "yo" ? "sent" : "received");
+    /* Revelar al hacer scroll */
+    var items = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+      items.forEach(function (el, i) { if (!el.style.getPropertyValue('--d')) el.style.setProperty('--d', ((i % 4) * 0.08) + 's'); io.observe(el); });
+    } else items.forEach(function (el) { el.classList.add('in'); });
+  };
 
-        const texto = document.createElement("span");
+  /* Contador animado */
+  NX.count = function (el, to) {
+    if (!el) return;
+    var from = parseInt(el.textContent, 10) || 0, t0 = performance.now(), dur = 700;
+    if (from === to) { el.textContent = to; return; }
+    (function step(t) {
+      var p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(from + (to - from) * e);
+      if (p < 1) requestAnimationFrame(step);
+    })(t0);
+  };
 
-        texto.textContent = mensaje.texto;
-
-        const hora = document.createElement("span");
-
-        hora.className = "message-time";
-
-        hora.textContent = mensaje.hora || "";
-
-        elemento.appendChild(texto);
-
-        elemento.appendChild(hora);
-
-        contenedor.appendChild(elemento);
-
+  /* Comprimir imagen a ≤ 400px (JPEG) para no llenar el almacenamiento */
+  NX.compressImage = function (file, max) {
+    max = max || 400;
+    return new Promise(function (res, rej) {
+      var fr = new FileReader();
+      fr.onerror = function () { rej(new Error('lectura')); };
+      fr.onload = function () {
+        var img = new Image();
+        img.onerror = function () { rej(new Error('imagen')); };
+        img.onload = function () {
+          var r = Math.min(1, max / Math.max(img.width, img.height));
+          var c = document.createElement('canvas');
+          c.width = Math.round(img.width * r); c.height = Math.round(img.height * r);
+          c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+          res(c.toDataURL('image/jpeg', 0.85));
+        };
+        img.src = fr.result;
+      };
+      fr.readAsDataURL(file);
     });
+  };
 
-    contenedor.scrollTop = contenedor.scrollHeight;
-
-}
-
-// BUSCADOR
-
-buscarContacto.addEventListener("input", () => {
-    mostrarContactos(buscarContacto.value);
-});
-
-// INICIAR CONTACTOS
-
-mostrarContactos();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', NX.initUI);
+  else NX.initUI();
+})();
 
 </script>
+  <script>
+  (function () {
+    var ses = NX.session(); if (!ses) return;
+    var $ = function (id) { return document.getElementById(id); };
+    var KEY = 'mensajesNexora_' + ses.correo, conv = NX.get(KEY, {}), actual = null, personas = NX.people();
+    var idDe = function (p) { return p.id || p.correo; };
+    var hora = function () { return new Date().toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' }); };
+    var guardar = function () { NX.set(KEY, conv); };
 
+    function contactos() {
+      var q = NX.norm($('buscar').value), box = $('contactos'); box.innerHTML = '';
+      var res = personas.filter(function (p) { return NX.norm(p.nombre + ' ' + p.profesion).indexOf(q) >= 0; });
+      res.sort(function (a, b) { return ult(b) - ult(a); });
+      if (!res.length) { box.appendChild(NX.el('div', { class: 'empty', style: 'margin:16px;border:0', text: 'No se encontraron contactos.' })); return; }
+      res.forEach(function (p) {
+        var ms = conv[idDe(p)] || [], u = ms.length ? ms[ms.length - 1].texto : 'Inicia una conversación';
+        box.appendChild(NX.el('div', { class: 'contact' + (actual === idDe(p) ? ' active' : ''), role: 'button', tabindex: '0',
+          onclick: function () { abrir(idDe(p)); }, onkeydown: function (e) { if (e.key === 'Enter') abrir(idDe(p)); } }, [
+          NX.avatar(p.nombre, p.foto),
+          NX.el('div', { class: 'info' }, [NX.el('h3', { text: p.nombre }), NX.el('p', { text: u })])
+        ]));
+      });
+    }
+    function ult(p) { var ms = conv[idDe(p)] || []; return ms.length ? (ms[ms.length - 1].ts || 1) : 0; }
+
+    function vacio() {
+      var c = $('conv'); c.innerHTML = '';
+      c.appendChild(NX.el('div', { class: 'conv-empty' }, [NX.el('div', { class: 'ico', text: '✉' }), NX.el('h2', { text: 'Bienvenido a Mensajes' }), NX.el('p', { text: 'Selecciona un contacto para comenzar una conversación.' })]));
+    }
+
+    function abrir(id) {
+      var p = personas.filter(function (x) { return idDe(x) === id; })[0]; if (!p) return;
+      actual = id; $('chat').classList.add('in-conv');
+      var c = $('conv'); c.innerHTML = '';
+      var msgs = NX.el('div', { class: 'msgs', id: 'msgs', 'aria-live': 'polite' });
+      var inp = NX.el('input', { type: 'text', placeholder: 'Escribe un mensaje...', autocomplete: 'off', maxlength: '500', 'aria-label': 'Mensaje' });
+      var form = NX.el('form', { class: 'msg-form' }, [inp, NX.el('button', { class: 'btn btn-primary', type: 'submit', text: 'Enviar' })]);
+      c.append(
+        NX.el('div', { class: 'conv-head' }, [
+          NX.el('button', { class: 'back', type: 'button', 'aria-label': 'Volver', text: '←', onclick: function () { actual = null; $('chat').classList.remove('in-conv'); vacio(); contactos(); } }),
+          NX.avatar(p.nombre, p.foto, 'avatar-sm'),
+          NX.el('div', {}, [NX.el('h2', { text: p.nombre }), NX.el('p', { text: p.profesion })])
+        ]), msgs, form);
+
+      pintar();
+      contactos();
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var t = inp.value.trim(); if (!t) return;
+        (conv[id] = conv[id] || []).push({ texto: t, remitente: 'yo', hora: hora(), ts: Date.now() });
+        guardar(); inp.value = ''; pintar(); contactos(); inp.focus();
+        respuestaDemo(id, p);
+      });
+      if (window.innerWidth > 760) inp.focus();
+    }
+
+    function burbuja(m) {
+      return NX.el('div', { class: 'msg ' + (m.remitente === 'yo' ? 'sent' : 'recv') }, [NX.el('span', { text: m.texto }), NX.el('time', { text: m.hora || '' })]);
+    }
+
+    function pintar() {
+      var box = $('msgs'); if (!box) return; box.innerHTML = '';
+      var ms = conv[actual] || [];
+      if (!ms.length) { box.appendChild(NX.el('p', { class: 'muted', style: 'margin:auto;text-align:center', text: 'Todavía no hay mensajes. ¡Envía el primero!' })); return; }
+      ms.forEach(function (m) { box.appendChild(burbuja(m)); });
+      box.scrollTop = box.scrollHeight;
+    }
+
+    /* Respuesta automática de los perfiles de ejemplo (demostración) */
+    var RESP = ['¡Hola! Gracias por escribirme, con gusto conversamos.', 'Qué buena idea, cuéntame más.', 'Me parece genial, coordinemos una llamada esta semana.', 'Gracias por el mensaje, te respondo con más detalle pronto.'];
+    function respuestaDemo(id, p) {
+      if (p.correo) return;                         // solo perfiles de ejemplo
+      var box = $('msgs'); if (!box) return;
+      var t = NX.el('div', { class: 'msg recv typing', id: 'typing', 'aria-label': 'Escribiendo' }, [NX.el('i'), NX.el('i'), NX.el('i')]);
+      box.appendChild(t); box.scrollTop = box.scrollHeight;
+      setTimeout(function () {
+        (conv[id] = conv[id] || []).push({ texto: RESP[Math.floor(Math.random() * RESP.length)], remitente: p.nombre, hora: hora(), ts: Date.now() });
+        guardar(); contactos();
+        if (actual === id) pintar(); else { var x = $('typing'); if (x) x.remove(); }
+      }, 1300 + Math.random() * 900);
+    }
+
+    $('buscar').addEventListener('input', NX.debounce(contactos, 120));
+    vacio(); contactos();
+    var pre = new URLSearchParams(location.search).get('c');
+    if (pre) abrir(pre);
+  })();
+  </script>
 </body>
 </html>
