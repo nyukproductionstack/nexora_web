@@ -5,7 +5,752 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear cuenta | NEXORA</title>
-    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+
+:root {
+    --verde: #1F5A5A;
+    --terracota: #D98E5B;
+    --crema: #F6F1E9;
+    --oscuro: #263535;
+    --blanco: #FFFFFF;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'DM Sans', Arial, sans-serif;
+    background: var(--crema);
+    color: var(--oscuro);
+}
+
+a {
+    text-decoration: none;
+}
+
+.navbar {
+    height: 82px;
+    padding: 0 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--blanco);
+}
+
+.logo {
+    color: var(--verde);
+    font-size: 27px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.logo span {
+    color: var(--terracota);
+}
+
+.nav-links {
+    display: flex;
+    gap: 32px;
+}
+
+.nav-links a {
+    color: #4E5C5C;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.nav-links a:hover {
+    color: var(--terracota);
+}
+
+.nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.btn-login {
+    color: var(--verde);
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.btn-register,
+.btn-primary {
+    background: var(--verde);
+    color: white;
+    padding: 13px 23px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    display: inline-block;
+    transition: .3s;
+}
+
+.btn-register:hover,
+.btn-primary:hover {
+    background: #164343;
+    transform: translateY(-2px);
+}
+
+.hero {
+    min-height: 610px;
+    padding: 80px 10%;
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+    align-items: center;
+    gap: 50px;
+}
+
+.tagline,
+.section-label {
+    color: #A8552A;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.hero h1 {
+    color: var(--verde);
+    font-size: clamp(38px, 4.4vw, 59px);
+    line-height: 1.13;
+    margin: 22px 0;
+    letter-spacing: -2px;
+}
+
+.hero h1 span {
+    color: var(--terracota);
+}
+
+.hero-content > p {
+    color: #687575;
+    max-width: 540px;
+    font-size: 16px;
+    line-height: 1.9;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    align-items: center;
+}
+
+.btn-secondary {
+    color: var(--verde);
+    font-weight: 700;
+    padding: 13px 20px;
+}
+
+.hero-stats {
+    display: flex;
+    gap: 50px;
+    margin-top: 48px;
+}
+
+.hero-stats h3 {
+    color: var(--verde);
+    font-size: 16px;
+}
+
+.hero-stats p {
+    color: #778080;
+    font-size: 12px;
+    margin-top: 6px;
+}
+
+.hero-visual {
+    position: relative;
+    padding: 25px;
+}
+
+.main-card {
+    background: white;
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 20px 60px #1F5A5A18;
+}
+
+.card-top {
+    display: flex;
+    gap: 13px;
+    align-items: center;
+}
+
+.avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--verde);
+    color: white;
+    font-weight: 800;
+    font-size: 20px;
+}
+
+.card-top strong,
+.card-top small {
+    display: block;
+}
+
+.card-top strong {
+    color: var(--verde);
+}
+
+.card-top small {
+    color: #899191;
+    margin-top: 4px;
+    font-size: 12px;
+}
+
+.network-graphic {
+    height: 260px;
+    margin: 25px 0;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #F6F1E9;
+    border-radius: 15px;
+}
+
+.network-center,
+.network-node {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+}
+
+.network-center {
+    width: 90px;
+    height: 90px;
+    background: var(--verde);
+    color: white;
+    font-size: 35px;
+    font-weight: 800;
+    border: 8px solid #DCE9E5;
+    z-index: 2;
+}
+
+.network-node {
+    width: 55px;
+    height: 55px;
+    background: white;
+    box-shadow: 0 5px 20px #00000012;
+    font-size: 24px;
+}
+
+.node-one { top: 25px; left: 55px; }
+.node-two { top: 25px; right: 55px; }
+.node-three { bottom: 25px; left: 55px; }
+.node-four { bottom: 25px; right: 55px; }
+
+.card-message strong {
+    color: var(--verde);
+}
+
+.card-message p {
+    color: #858D8D;
+    margin-top: 5px;
+    font-size: 13px;
+}
+
+.floating-card {
+    position: absolute;
+    right: -5px;
+    bottom: -5px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: white;
+    padding: 17px;
+    border-radius: 12px;
+    box-shadow: 0 10px 35px #00000012;
+}
+
+.floating-card > span {
+    color: var(--terracota);
+    font-size: 27px;
+}
+
+.floating-card strong,
+.floating-card small {
+    display: block;
+}
+
+.floating-card strong {
+    color: var(--verde);
+    font-size: 13px;
+}
+
+.floating-card small {
+    color: #858D8D;
+    font-size: 11px;
+    margin-top: 4px;
+}
+
+.about {
+    text-align: center;
+    padding: 90px 20px;
+    background: white;
+}
+
+.about h2,
+.features h2 {
+    color: var(--verde);
+    font-size: 34px;
+    margin: 18px 0;
+}
+
+.about p {
+    max-width: 690px;
+    margin: auto;
+    line-height: 1.9;
+    color: #687575;
+}
+
+.features {
+    padding: 90px 10%;
+    text-align: center;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin-top: 45px;
+}
+
+.feature-card {
+    text-align: left;
+    background: white;
+    border-radius: 13px;
+    padding: 28px;
+    border: 1px solid #EAE5DC;
+    transition: .3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px #1F5A5A12;
+}
+
+.feature-icon {
+    font-size: 30px;
+    margin-bottom: 18px;
+}
+
+.feature-card h3 {
+    color: var(--verde);
+    margin-bottom: 12px;
+}
+
+.feature-card p {
+    color: #758080;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.cta {
+    background: var(--verde);
+    color: white;
+    text-align: center;
+    padding: 75px 20px;
+}
+
+.cta h2 {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.cta p {
+    color: #E0EAE7;
+    margin-bottom: 28px;
+}
+
+.cta .btn-primary {
+    background: var(--terracota);
+}
+
+footer {
+    background: white;
+    text-align: center;
+    padding: 35px 15px;
+}
+
+footer p {
+    color: #778080;
+    margin: 12px 0;
+    font-size: 13px;
+}
+
+footer small {
+    color: #929999;
+    font-size: 11px;
+}
+
+@media (max-width: 900px) {
+    .navbar {
+        padding: 18px 5%;
+        height: auto;
+        flex-wrap: wrap;
+        gap: 18px;
+    }
+
+    .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 18px;
+    }
+
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 55px 7%;
+    }
+
+    .hero-visual {
+        max-width: 550px;
+        width: 100%;
+        margin: auto;
+    }
+
+    .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 550px) {
+    .nav-buttons {
+        gap: 10px;
+    }
+
+    .hero h1 {
+        font-size: 38px;
+    }
+
+    .hero-stats {
+        gap: 20px;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about h2,
+    .features h2,
+    .cta h2 {
+        font-size: 27px;
+    }
+
+    .floating-card {
+        right: 0;
+    }
+}
+
+/* =================================
+   INICIO DE SESIÓN - NEXORA
+================================= */
+
+.auth-body {
+    min-height: 100vh;
+    background: var(--crema);
+}
+
+.auth-navbar {
+    padding: 0 8%;
+}
+
+.back-home {
+    color: var(--verde);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.auth-container {
+    min-height: calc(100vh - 150px);
+    padding: 65px 10%;
+    display: grid;
+    grid-template-columns: 1fr 0.85fr;
+    align-items: center;
+    gap: 75px;
+}
+
+.auth-info h1 {
+    color: var(--verde);
+    font-size: clamp(35px, 4vw, 52px);
+    line-height: 1.15;
+    margin: 22px 0;
+    max-width: 550px;
+}
+
+.auth-info > p {
+    color: #687575;
+    line-height: 1.9;
+    max-width: 500px;
+    margin-bottom: 30px;
+}
+
+.auth-benefit {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 18px 0;
+    color: #526363;
+    font-size: 14px;
+}
+
+.auth-benefit span {
+    background: #DCE9E5;
+    color: var(--verde);
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+}
+
+.auth-card {
+    background: white;
+    padding: 38px;
+    border-radius: 18px;
+    box-shadow: 0 15px 50px #1F5A5A12;
+    width: 100%;
+    max-width: 470px;
+    justify-self: end;
+}
+
+.auth-heading {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.auth-icon {
+    width: 55px;
+    height: 55px;
+    background: var(--verde);
+    color: white;
+    border-radius: 15px;
+    display: grid;
+    place-items: center;
+    font-size: 25px;
+    font-weight: 800;
+    margin: 0 auto 18px;
+}
+
+.auth-heading h2 {
+    color: var(--verde);
+    font-size: 27px;
+    margin-bottom: 9px;
+}
+
+.auth-heading p {
+    color: #899191;
+    font-size: 14px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    color: #344646;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 9px;
+}
+
+.form-group input {
+    width: 100%;
+    height: 48px;
+    border: 1px solid #DDE3DF;
+    border-radius: 8px;
+    padding: 0 14px;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    background: #FCFCFA;
+}
+
+.form-group input:focus {
+    border-color: var(--verde);
+    box-shadow: 0 0 0 3px #1F5A5A14;
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper input {
+    padding-right: 75px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    color: var(--verde);
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin: 5px 0 25px;
+    font-size: 12px;
+}
+
+.remember-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #687575;
+}
+
+.form-options a {
+    color: var(--verde);
+    font-weight: 700;
+}
+
+.auth-submit {
+    width: 100%;
+    min-height: 49px;
+    border: none;
+    border-radius: 8px;
+    background: var(--verde);
+    color: white;
+    font-size: 14px;
+    font-family: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.auth-submit:hover {
+    background: #164343;
+    transform: translateY(-2px);
+}
+
+.form-message {
+    min-height: 20px;
+    margin-top: 13px;
+    font-size: 13px;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.auth-divider {
+    text-align: center;
+    border-top: 1px solid #EAEDEA;
+    margin: 25px 0 20px;
+    padding-top: 20px;
+    color: #899191;
+    font-size: 13px;
+}
+
+.auth-register {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 13px;
+    border: 1px solid var(--verde);
+    color: var(--verde);
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    transition: .3s;
+}
+
+.auth-register:hover {
+    background: #F0F5F2;
+}
+
+.auth-terms {
+    text-align: center;
+    color: #929999;
+    font-size: 11px;
+    margin-top: 22px;
+    line-height: 1.6;
+}
+
+.auth-footer {
+    text-align: center;
+    padding: 20px;
+    color: #899191;
+    font-size: 12px;
+}
+
+/* Adaptación para celulares */
+
+@media (max-width: 850px) {
+    .auth-container {
+        grid-template-columns: 1fr;
+        gap: 35px;
+        padding: 45px 7%;
+    }
+
+    .auth-info {
+        text-align: center;
+    }
+
+    .auth-info h1,
+    .auth-info > p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .auth-benefit {
+        justify-content: center;
+    }
+
+    .auth-card {
+        justify-self: center;
+    }
+}
+
+@media (max-width: 500px) {
+    .auth-navbar {
+        padding: 18px 5%;
+        height: auto;
+    }
+
+    .auth-container {
+        padding: 35px 5%;
+    }
+
+    .auth-card {
+        padding: 25px 20px;
+    }
+
+    .form-options {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+    </style>
 
     <style>
         * {
