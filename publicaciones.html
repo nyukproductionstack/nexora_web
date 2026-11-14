@@ -1,0 +1,595 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Publicaciones | NEXORA</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #F6F1E9;
+    color: #263535;
+}
+
+header {
+    background: #1F5A5A;
+    color: white;
+    padding: 18px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+main {
+    max-width: 1100px;
+    margin: 35px auto;
+    padding: 0 20px;
+}
+
+h1, h2 {
+    color: #1F5A5A;
+}
+
+.intro {
+    margin-bottom: 25px;
+}
+
+.intro p {
+    color: #687575;
+    margin-top: 8px;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 25px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 12px rgba(0,0,0,.04);
+}
+
+.card h2 {
+    font-size: 19px;
+    margin-bottom: 15px;
+}
+
+textarea {
+    width: 100%;
+    min-height: 110px;
+    resize: vertical;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 14px;
+    font-size: 15px;
+    outline-color: #1F5A5A;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    border-radius: 7px;
+    padding: 10px 17px;
+    font-weight: bold;
+}
+
+.publish-btn {
+    background: #1F5A5A;
+    color: white;
+    margin-top: 12px;
+}
+
+.publish-btn:hover {
+    background: #164444;
+}
+
+.post {
+    background: white;
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 18px;
+    box-shadow: 0 3px 12px rgba(0,0,0,.04);
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #1F5A5A;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 18px;
+    flex-shrink: 0;
+    object-fit: cover;
+}
+
+.post-header h3 {
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+
+.post-header p, .fecha {
+    color: #829090;
+    font-size: 12px;
+}
+
+.post-content {
+    line-height: 1.6;
+    margin-bottom: 15px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.post-actions {
+    display: flex;
+    gap: 10px;
+    border-top: 1px solid #eee;
+    padding-top: 12px;
+    flex-wrap: wrap;
+}
+
+.like-btn {
+    background: #f1f4f2;
+    color: #1F5A5A;
+}
+
+.like-btn.active {
+    background: #D98E5B;
+    color: white;
+}
+
+.comment-btn {
+    background: #f1f4f2;
+    color: #1F5A5A;
+}
+
+.comments {
+    margin-top: 15px;
+    border-top: 1px solid #eee;
+    padding-top: 12px;
+}
+
+.comment-form {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.comment-form input {
+    flex: 1;
+    min-width: 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+}
+
+.comment-form button {
+    background: #1F5A5A;
+    color: white;
+}
+
+.comment-item {
+    background: #F6F1E9;
+    padding: 10px;
+    border-radius: 7px;
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+.comment-author {
+    color: #1F5A5A;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.side-card p {
+    color: #687575;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.empty {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
+    color: #718080;
+}
+
+@media(max-width: 750px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    nav a {
+        margin-left: 0;
+    }
+
+    .comment-form {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">NEXORA</div>
+    <nav>
+        <a href="dashboard.html">Inicio</a>
+        <a href="perfil.html">Mi perfil</a>
+        <a href="networking.html">Networking</a>
+        <a href="publicaciones.html">Publicaciones</a>
+    </nav>
+</header>
+
+<main>
+
+    <section class="intro">
+        <h1>Comunidad NEXORA</h1>
+        <p>Comparte tus ideas, experiencias y conocimientos con otros profesionales.</p>
+    </section>
+
+    <div class="layout">
+
+        <section>
+
+            <div class="card">
+                <h2>Crear publicación</h2>
+
+                <textarea id="contenido"
+                    placeholder="¿Qué te gustaría compartir con la comunidad?"></textarea>
+
+                <button class="publish-btn" id="publicar">Publicar</button>
+
+                <p id="mensaje" style="margin-top:10px;color:#1F5A5A;"></p>
+            </div>
+
+            <h2 style="margin-bottom:15px;">Publicaciones recientes</h2>
+
+            <div id="listaPublicaciones"></div>
+
+        </section>
+
+        <aside>
+
+            <div class="card side-card">
+                <h2>Comunidad profesional</h2>
+                <p>
+                    NEXORA te permite compartir conocimientos, dar a conocer
+                    tus proyectos y aprender de las experiencias de otros profesionales.
+                </p>
+            </div>
+
+            <div class="card side-card">
+                <h2>Comparte con responsabilidad</h2>
+                <p>
+                    Publica contenido relacionado con tus intereses profesionales
+                    y mantén una comunicación respetuosa con los demás integrantes.
+                </p>
+            </div>
+
+        </aside>
+
+    </div>
+</main>
+
+<script>
+const sesion = JSON.parse(
+    localStorage.getItem("sesionNexora") || "null"
+);
+
+if (!sesion) {
+    window.location.href = "login.html";
+} else {
+
+    const clavePublicaciones = "publicacionesNexora";
+    const claveMeGusta = "meGustaNexora_" + sesion.correo;
+    const claveComentarios = "comentariosNexora";
+
+    let publicaciones = JSON.parse(
+        localStorage.getItem(clavePublicaciones) || "[]"
+    );
+
+    let meGusta = JSON.parse(
+        localStorage.getItem(claveMeGusta) || "[]"
+    );
+
+    let comentarios = JSON.parse(
+        localStorage.getItem(claveComentarios) || "{}"
+    );
+
+    const perfil = JSON.parse(
+        localStorage.getItem("perfilNexora_" + sesion.correo) || "null"
+    ) || {};
+
+    const nombreUsuario = perfil.nombre || sesion.nombre || "Usuario NEXORA";
+    const profesionUsuario = perfil.profesion || "Miembro de NEXORA";
+    const fotoUsuario = perfil.foto || "";
+
+    const contenido = document.getElementById("contenido");
+    const lista = document.getElementById("listaPublicaciones");
+    const mensaje = document.getElementById("mensaje");
+
+    // Crear una publicación
+    document.getElementById("publicar").addEventListener("click", () => {
+
+        const texto = contenido.value.trim();
+
+        if (!texto) {
+            mensaje.textContent = "Escribe algo antes de publicar.";
+            return;
+        }
+
+        publicaciones.unshift({
+            id: Date.now().toString(),
+            nombre: nombreUsuario,
+            correo: sesion.correo,
+            profesion: profesionUsuario,
+            texto: texto,
+            fecha: new Date().toLocaleString("es-PE"),
+            likes: []
+        });
+
+        localStorage.setItem(
+            clavePublicaciones,
+            JSON.stringify(publicaciones)
+        );
+
+        contenido.value = "";
+        mensaje.textContent = "¡Tu publicación se realizó correctamente!";
+
+        mostrarPublicaciones();
+    });
+
+    // Recuperar fotografía del autor
+    function obtenerFoto(correo) {
+
+        const perfilAutor = JSON.parse(
+            localStorage.getItem("perfilNexora_" + correo) || "null"
+        ) || {};
+
+        return perfilAutor.foto || "";
+    }
+
+    // Mostrar publicaciones
+    function mostrarPublicaciones() {
+
+        lista.innerHTML = "";
+
+        if (publicaciones.length === 0) {
+            lista.innerHTML = `
+                <div class="empty">
+                    Todavía no hay publicaciones.
+                    ¡Sé el primero en compartir algo!
+                </div>
+            `;
+            return;
+        }
+
+        publicaciones.forEach(post => {
+
+            const comentariosPost = comentarios[post.id] || [];
+            const likesPost = post.likes || [];
+            const yaLeGusta = meGusta.includes(post.id);
+
+            const tarjeta = document.createElement("article");
+            tarjeta.className = "post";
+
+            // Cabecera
+            const cabecera = document.createElement("div");
+            cabecera.className = "post-header";
+
+            const foto = obtenerFoto(post.correo);
+
+            if (foto) {
+                const imagen = document.createElement("img");
+                imagen.className = "avatar";
+                imagen.src = foto;
+                imagen.alt = "Foto de " + (post.nombre || "usuario");
+                cabecera.appendChild(imagen);
+            } else {
+                const inicial = document.createElement("div");
+                inicial.className = "avatar";
+                inicial.textContent = (post.nombre || "U").charAt(0).toUpperCase();
+                cabecera.appendChild(inicial);
+            }
+
+            const datosAutor = document.createElement("div");
+
+            const nombre = document.createElement("h3");
+            nombre.textContent = post.nombre || "Usuario NEXORA";
+
+            const profesion = document.createElement("p");
+            profesion.textContent = post.profesion || "Miembro de NEXORA";
+
+            const fecha = document.createElement("span");
+            fecha.className = "fecha";
+            fecha.textContent = post.fecha || "";
+
+            datosAutor.append(nombre, profesion, fecha);
+            cabecera.appendChild(datosAutor);
+
+            // Contenido
+            const texto = document.createElement("div");
+            texto.className = "post-content";
+            texto.textContent = post.texto || "";
+
+            // Acciones
+            const acciones = document.createElement("div");
+            acciones.className = "post-actions";
+
+            const botonLike = document.createElement("button");
+            botonLike.className = "like-btn" + (yaLeGusta ? " active" : "");
+            botonLike.textContent =
+                (yaLeGusta ? "♥ Me gusta" : "♡ Me gusta") +
+                " (" + likesPost.length + ")";
+
+            const botonComentario = document.createElement("button");
+            botonComentario.className = "comment-btn";
+            botonComentario.textContent =
+                "Comentar (" + comentariosPost.length + ")";
+
+            acciones.append(botonLike, botonComentario);
+
+            // Zona de comentarios
+            const zonaComentarios = document.createElement("div");
+            zonaComentarios.className = "comments";
+            zonaComentarios.style.display = "none";
+
+            const listaComentarios = document.createElement("div");
+
+            comentariosPost.forEach(comentario => {
+
+                const elemento = document.createElement("div");
+                elemento.className = "comment-item";
+
+                const autor = document.createElement("div");
+                autor.className = "comment-author";
+                autor.textContent = comentario.nombre || "Usuario";
+
+                const textoComentario = document.createElement("div");
+                textoComentario.textContent = comentario.texto || "";
+
+                elemento.append(autor, textoComentario);
+                listaComentarios.appendChild(elemento);
+            });
+
+            const formulario = document.createElement("div");
+            formulario.className = "comment-form";
+
+            const inputComentario = document.createElement("input");
+            inputComentario.type = "text";
+            inputComentario.placeholder = "Escribe un comentario...";
+
+            const botonEnviar = document.createElement("button");
+            botonEnviar.textContent = "Enviar";
+
+            formulario.append(inputComentario, botonEnviar);
+
+            zonaComentarios.append(listaComentarios, formulario);
+
+            // Evento Me gusta
+            botonLike.addEventListener("click", () => {
+
+                const indice = meGusta.indexOf(post.id);
+
+                if (indice >= 0) {
+                    meGusta.splice(indice, 1);
+                    post.likes = likesPost.filter(
+                        correo => correo !== sesion.correo
+                    );
+                } else {
+                    meGusta.push(post.id);
+                    post.likes = [
+                        ...likesPost.filter(correo => correo !== sesion.correo),
+                        sesion.correo
+                    ];
+                }
+
+                localStorage.setItem(
+                    claveMeGusta,
+                    JSON.stringify(meGusta)
+                );
+
+                localStorage.setItem(
+                    clavePublicaciones,
+                    JSON.stringify(publicaciones)
+                );
+
+                mostrarPublicaciones();
+            });
+
+            // Mostrar u ocultar comentarios
+            botonComentario.addEventListener("click", () => {
+
+                zonaComentarios.style.display =
+                    zonaComentarios.style.display === "none"
+                    ? "block"
+                    : "none";
+            });
+
+            // Enviar comentario
+            botonEnviar.addEventListener("click", () => {
+
+                const textoComentario = inputComentario.value.trim();
+
+                if (!textoComentario) return;
+
+                if (!comentarios[post.id]) {
+                    comentarios[post.id] = [];
+                }
+
+                comentarios[post.id].push({
+                    nombre: nombreUsuario,
+                    correo: sesion.correo,
+                    texto: textoComentario
+                });
+
+                localStorage.setItem(
+                    claveComentarios,
+                    JSON.stringify(comentarios)
+                );
+
+                mostrarPublicaciones();
+            });
+
+            tarjeta.append(
+                cabecera,
+                texto,
+                acciones,
+                zonaComentarios
+            );
+
+            lista.appendChild(tarjeta);
+        });
+    }
+
+    mostrarPublicaciones();
+}
+</script>
+
+</body>
+</html>

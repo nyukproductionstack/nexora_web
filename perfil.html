@@ -1,0 +1,386 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi perfil | NEXORA</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #F6F1E9;
+            color: #294747;
+        }
+
+        header {
+            background: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: #1F5A5A;
+            font-size: 27px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .logo span { color: #D98E5B; }
+
+        header a:last-child {
+            color: #1F5A5A;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .profile-header, .section {
+            background: white;
+            border-radius: 14px;
+            padding: 28px;
+            margin-bottom: 22px;
+            box-shadow: 0 5px 20px #00000008;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: #1F5A5A;
+            color: white;
+            display: grid;
+            place-items: center;
+            font-size: 38px;
+            font-weight: bold;
+            flex-shrink: 0;
+            object-fit: cover;
+        }
+
+        .photo-area {
+            text-align: center;
+        }
+
+        .photo-button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 9px 13px;
+            background: #EAF1ED;
+            color: #1F5A5A;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        h1, h2 { color: #1F5A5A; }
+        h1 { margin-bottom: 7px; }
+
+        .muted {
+            color: #82908D;
+            line-height: 1.6;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin: 16px 0 7px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #DCE3DE;
+            border-radius: 8px;
+            font: inherit;
+            outline: none;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #1F5A5A;
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0 20px;
+        }
+
+        button {
+            background: #1F5A5A;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 13px 22px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        button:hover { background: #174747; }
+
+        #message {
+            color: #1F5A5A;
+            margin-top: 12px;
+        }
+
+        @media(max-width: 600px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .form-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <a href="dashboard.html" class="logo">NEXORA<span>.</span></a>
+    <a href="dashboard.html">← Volver al inicio</a>
+</header>
+
+<main class="container">
+
+    <section class="profile-header">
+
+        <div class="photo-area">
+            <img id="avatar" class="avatar" alt="Foto de perfil"
+                 style="display:none;">
+
+            <div id="avatarInitial" class="avatar">U</div>
+
+            <label for="photoInput" class="photo-button">
+                📷 Cambiar foto
+            </label>
+
+            <input type="file" id="photoInput"
+                   accept="image/png,image/jpeg,image/webp"
+                   hidden>
+        </div>
+
+        <div>
+            <h1 id="displayName">Mi perfil profesional</h1>
+            <p class="muted" id="displayProfession">
+                Completa tus datos para presentarte a la comunidad.
+            </p>
+            <p class="muted" id="displayEmail"></p>
+        </div>
+
+    </section>
+
+    <section class="section">
+        <h2>Información profesional</h2>
+
+        <p class="muted">
+            Agrega tus datos para que otros profesionales puedan conocerte.
+        </p>
+
+        <form id="profileForm">
+
+            <div class="form-grid">
+                <div>
+                    <label for="nombre">Nombre completo</label>
+                    <input type="text" id="nombre" required>
+                </div>
+
+                <div>
+                    <label for="profesion">Profesión u ocupación</label>
+                    <input type="text" id="profesion"
+                           placeholder="Ej. Estudiante de Ingeniería" required>
+                </div>
+
+                <div>
+                    <label for="especialidad">Especialidad</label>
+                    <input type="text" id="especialidad"
+                           placeholder="Ej. Desarrollo web">
+                </div>
+
+                <div>
+                    <label for="ubicacion">Ubicación</label>
+                    <input type="text" id="ubicacion"
+                           placeholder="Ej. Lima, Perú">
+                </div>
+            </div>
+
+            <label for="presentacion">Sobre mí</label>
+            <textarea id="presentacion"
+                placeholder="Cuéntanos sobre tu experiencia, intereses y objetivos profesionales..."></textarea>
+
+            <label for="habilidades">Habilidades</label>
+            <input type="text" id="habilidades"
+                placeholder="Ej. HTML, CSS, JavaScript, trabajo en equipo">
+
+            <label for="experiencia">Experiencia o formación</label>
+            <textarea id="experiencia"
+                placeholder="Describe tus estudios, proyectos o experiencia laboral..."></textarea>
+
+            <button type="submit">Guardar perfil</button>
+
+            <p id="message" role="status"></p>
+
+        </form>
+    </section>
+
+</main>
+
+<script>
+const sesion = JSON.parse(
+    localStorage.getItem("sesionNexora") || "null"
+);
+
+if (!sesion) {
+    window.location.href = "login.html";
+} else {
+
+    const form = document.getElementById("profileForm");
+
+    const campos = [
+        "nombre",
+        "profesion",
+        "especialidad",
+        "ubicacion",
+        "presentacion",
+        "habilidades",
+        "experiencia"
+    ];
+
+    let perfilGuardado = JSON.parse(
+        localStorage.getItem("perfilNexora_" + sesion.correo) || "null"
+    ) || {};
+
+    let fotoPerfil = perfilGuardado.foto || "";
+
+    const avatar = document.getElementById("avatar");
+    const avatarInitial = document.getElementById("avatarInitial");
+    const photoInput = document.getElementById("photoInput");
+
+    function mostrarFoto() {
+        if (fotoPerfil) {
+            avatar.src = fotoPerfil;
+            avatar.style.display = "block";
+            avatarInitial.style.display = "none";
+        } else {
+            avatar.style.display = "none";
+            avatarInitial.style.display = "grid";
+        }
+    }
+
+    function actualizarVista(datos) {
+        document.getElementById("displayName").textContent =
+            datos.nombre || "Mi perfil profesional";
+
+        document.getElementById("displayProfession").textContent =
+            datos.profesion || "Completa tu información profesional";
+
+        document.getElementById("displayEmail").textContent =
+            sesion.correo;
+
+        avatarInitial.textContent =
+            (datos.nombre || "U").charAt(0).toUpperCase();
+
+        mostrarFoto();
+    }
+
+    function mostrarPerfil() {
+        campos.forEach(campo => {
+            document.getElementById(campo).value =
+                perfilGuardado[campo] || "";
+        });
+
+        if (!perfilGuardado.nombre) {
+            document.getElementById("nombre").value =
+                sesion.nombre || "";
+        }
+
+        actualizarVista(perfilGuardado);
+    }
+
+    photoInput.addEventListener("change", function() {
+        const archivo = this.files[0];
+
+        if (!archivo) return;
+
+        if (!["image/jpeg", "image/png", "image/webp"].includes(archivo.type)) {
+            alert("Selecciona una imagen JPG, PNG o WEBP.");
+            this.value = "";
+            return;
+        }
+
+        if (archivo.size > 2 * 1024 * 1024) {
+            alert("La imagen debe pesar menos de 2 MB.");
+            this.value = "";
+            return;
+        }
+
+        const lector = new FileReader();
+
+        lector.onload = function(event) {
+            fotoPerfil = event.target.result;
+            mostrarFoto();
+
+            document.getElementById("message").textContent =
+                "Foto seleccionada. Guarda tu perfil para conservarla.";
+        };
+
+        lector.readAsDataURL(archivo);
+    });
+
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const datos = {};
+
+        campos.forEach(campo => {
+            datos[campo] = document.getElementById(campo).value.trim();
+        });
+
+        datos.foto = fotoPerfil;
+
+        try {
+            localStorage.setItem(
+                "perfilNexora_" + sesion.correo,
+                JSON.stringify(datos)
+            );
+
+            perfilGuardado = datos;
+            actualizarVista(datos);
+
+            document.getElementById("message").textContent =
+                "¡Tu perfil se guardó correctamente!";
+
+        } catch (error) {
+            document.getElementById("message").textContent =
+                "No se pudo guardar la foto. Prueba con una imagen más pequeña.";
+        }
+    });
+
+    mostrarPerfil();
+}
+</script>
+
+</body>
+</html>

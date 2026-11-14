@@ -1,0 +1,563 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inicio | NEXORA</title>
+
+<link rel="stylesheet" href="css/estilos.css">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    background:#F6F1E9;
+    color:#294747;
+    font-family:Arial,sans-serif;
+}
+
+.dashboard-nav{
+    background:white;
+    padding:14px 5%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    box-shadow:0 2px 12px #0000000b;
+    position:sticky;
+    top:0;
+    z-index:10;
+}
+
+.dashboard-logo{
+    font-size:28px;
+    font-weight:bold;
+    color:#1F5A5A;
+    text-decoration:none;
+}
+
+.dashboard-logo span{color:#D98E5B}
+
+.search-box{
+    flex:1;
+    max-width:420px;
+}
+
+.search-box input{
+    width:100%;
+    padding:12px 17px;
+    border:1px solid #E3E8E3;
+    border-radius:25px;
+    background:#F8F8F5;
+    outline:none;
+}
+
+.dashboard-user{
+    display:flex;
+    align-items:center;
+    gap:13px;
+}
+
+.avatar,.profile-avatar{
+    width:43px;
+    height:43px;
+    border-radius:50%;
+    background:#1F5A5A;
+    color:white;
+    display:grid;
+    place-items:center;
+    font-weight:bold;
+    object-fit:cover;
+    overflow:hidden;
+    flex-shrink:0;
+}
+
+.logout{
+    border:0;
+    background:#1F5A5A;
+    color:white;
+    padding:11px 16px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.dashboard-container{
+    max-width:1320px;
+    margin:30px auto;
+    padding:0 22px;
+    display:grid;
+    grid-template-columns:250px minmax(0,1fr) 280px;
+    gap:22px;
+}
+
+.panel{
+    background:white;
+    padding:22px;
+    border-radius:14px;
+    margin-bottom:20px;
+    box-shadow:0 5px 22px #00000008;
+}
+
+.profile-cover{
+    height:85px;
+    margin:-22px -22px 0;
+    border-radius:14px 14px 0 0;
+    background:linear-gradient(120deg,#1F5A5A,#43827B);
+}
+
+.profile-avatar{
+    width:78px;
+    height:78px;
+    font-size:26px;
+    border:5px solid white;
+    margin:-39px auto 10px;
+    position:relative;
+}
+
+.profile-card{text-align:center}
+
+.profile-card h3{margin:8px 0}
+
+.muted{
+    color:#82908D;
+    font-size:13px;
+    line-height:1.6;
+}
+
+.profile-stats{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    border-top:1px solid #EDF0ED;
+    margin-top:18px;
+    padding-top:15px;
+}
+
+.profile-stats strong{
+    display:block;
+    color:#1F5A5A;
+    font-size:19px;
+}
+
+.menu a{
+    display:block;
+    text-decoration:none;
+    color:#526363;
+    padding:13px;
+    border-radius:8px;
+    margin:4px 0;
+}
+
+.menu a:hover,.menu a.active{
+    background:#EAF1ED;
+    color:#1F5A5A;
+    font-weight:bold;
+}
+
+.welcome{
+    background:linear-gradient(120deg,#FFFFFF,#F4F8F4);
+}
+
+.welcome h1{
+    color:#1F5A5A;
+    font-size:29px;
+    margin-top:0;
+}
+
+.welcome p{
+    color:#74817F;
+    line-height:1.7;
+}
+
+.quick-actions{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-top:20px;
+}
+
+.action{
+    background:#F6F1E9;
+    padding:18px 10px;
+    border-radius:11px;
+    text-align:center;
+    text-decoration:none;
+    color:#1F5A5A;
+    font-weight:bold;
+    font-size:14px;
+    transition:.2s;
+}
+
+.action:hover{
+    background:#E8EFEB;
+    transform:translateY(-3px);
+}
+
+.action span{
+    display:block;
+    font-size:26px;
+    margin-bottom:9px;
+}
+
+.post-box textarea{
+    width:100%;
+    min-height:95px;
+    padding:14px;
+    border:1px solid #DFE5E1;
+    border-radius:10px;
+    resize:vertical;
+    font-family:inherit;
+    outline:none;
+}
+
+.post-box textarea:focus{border-color:#1F5A5A}
+
+.primary-button{
+    background:#1F5A5A;
+    color:white;
+    border:0;
+    padding:12px 20px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-top:12px;
+}
+
+.post{
+    border-top:1px solid #EAEDEA;
+    margin-top:20px;
+    padding-top:17px;
+}
+
+.post h4{margin-bottom:5px}
+
+.suggestion{
+    padding:14px 0;
+    border-bottom:1px solid #EDF0ED;
+}
+
+.suggestion:last-child{border:0}
+
+.suggestion strong{
+    display:block;
+    margin-bottom:5px;
+}
+
+.right-link{
+    color:#1F5A5A;
+    text-decoration:none;
+    font-weight:bold;
+    font-size:13px;
+}
+
+.dashboard-footer{
+    text-align:center;
+    color:#82908D;
+    font-size:12px;
+    padding:25px;
+}
+
+@media(max-width:1000px){
+    .dashboard-container{
+        grid-template-columns:220px 1fr;
+    }
+    .right-column{grid-column:1/-1}
+}
+
+@media(max-width:650px){
+    .dashboard-container{grid-template-columns:1fr}
+    .quick-actions{grid-template-columns:1fr}
+    .dashboard-nav{flex-wrap:wrap}
+    .search-box{order:3;max-width:none;flex-basis:100%}
+    .dashboard-user span{display:none}
+}
+</style>
+</head>
+
+<body>
+
+<header class="dashboard-nav">
+    <a href="dashboard.html" class="dashboard-logo">NEXORA<span>.</span></a>
+
+    <div class="search-box">
+        <input type="search" placeholder="Buscar profesionales, eventos...">
+    </div>
+
+    <div class="dashboard-user">
+        <img class="avatar" id="userPhoto" alt="Foto de perfil" style="display:none;">
+        <div class="avatar" id="userInitial">U</div>
+        <span id="userName">Usuario</span>
+        <button class="logout" id="logoutButton">Salir</button>
+    </div>
+</header>
+
+<main class="dashboard-container">
+
+    <aside>
+        <section class="panel profile-card">
+            <div class="profile-cover"></div>
+
+            <img class="profile-avatar" id="profilePhoto"
+                 alt="Foto de perfil" style="display:none;">
+
+            <div class="profile-avatar" id="profileInitial">U</div>
+
+            <h3 id="profileName">Usuario</h3>
+            <p class="muted" id="profileProfession">Miembro de NEXORA</p>
+
+            <div class="profile-stats">
+                <div>
+                    <strong id="connectionCount">0</strong>
+                    <span class="muted">Conexiones</span>
+                </div>
+                <div>
+                    <strong id="publicationCount">0</strong>
+                    <span class="muted">Publicaciones</span>
+                </div>
+            </div>
+
+            <a href="perfil.html" class="right-link">Ver mi perfil →</a>
+        </section>
+
+        <nav class="panel menu">
+            <a href="dashboard.html" class="active">⌂ Inicio</a>
+            <a href="perfil.html">◉ Mi perfil</a>
+            <a href="networking.html">♧ Networking</a>
+            <a href="publicaciones.html">▤ Publicaciones</a>
+            <a href="eventos.html">▣ Eventos</a>
+            <a href="mensajes.html">✉ Mensajes</a>
+        </nav>
+    </aside>
+
+    <section>
+
+        <div class="panel welcome">
+            <h1>¡Hola, <span id="welcomeName">Usuario</span>!</h1>
+
+            <p>
+                Bienvenido a NEXORA. Conecta con profesionales,
+                comparte tus conocimientos y descubre nuevas oportunidades.
+            </p>
+
+            <div class="quick-actions">
+                <a href="perfil.html" class="action">
+                    <span>👤</span>Mi perfil
+                </a>
+
+                <a href="networking.html" class="action">
+                    <span>🤝</span>Conectar
+                </a>
+
+                <a href="eventos.html" class="action">
+                    <span>📅</span>Eventos
+                </a>
+            </div>
+        </div>
+
+        <div class="panel post-box">
+            <h3>Comparte con tu comunidad</h3>
+
+            <textarea id="postContent"
+                placeholder="¿Qué te gustaría compartir hoy?"></textarea>
+
+            <button class="primary-button" id="publishButton">
+                Publicar
+            </button>
+
+            <div id="postsContainer"></div>
+        </div>
+
+    </section>
+
+    <aside class="right-column">
+
+        <div class="panel">
+            <h3>Conexiones sugeridas</h3>
+
+            <div class="suggestion">
+                <strong>👨‍💻 Desarrolladores</strong>
+                <p class="muted">Conoce personas del área tecnológica.</p>
+            </div>
+
+            <div class="suggestion">
+                <strong>🎓 Estudiantes</strong>
+                <p class="muted">Comparte experiencias académicas.</p>
+            </div>
+
+            <div class="suggestion">
+                <strong>💼 Profesionales</strong>
+                <p class="muted">Amplía tus contactos laborales.</p>
+            </div>
+
+            <a href="networking.html" class="right-link">Ver profesionales →</a>
+        </div>
+
+        <div class="panel">
+            <h3>Oportunidades</h3>
+            <p class="muted">
+                Mantente atento a nuevas ofertas laborales,
+                actividades y eventos profesionales.
+            </p>
+            <a href="eventos.html" class="right-link">Explorar eventos →</a>
+        </div>
+
+        <div class="panel">
+            <h3>Tu espacio profesional</h3>
+            <p class="muted">
+                Mantén tu perfil actualizado para que otros profesionales
+                conozcan tus habilidades y experiencia.
+            </p>
+            <a href="perfil.html" class="right-link">Actualizar perfil →</a>
+        </div>
+
+    </aside>
+
+</main>
+
+<footer class="dashboard-footer">
+    © 2026 NEXORA. Conectando personas y oportunidades.
+</footer>
+
+<script>
+const sesion = JSON.parse(
+    localStorage.getItem("sesionNexora") || "null"
+);
+
+if (!sesion) {
+    window.location.href = "login.html";
+} else {
+
+    const perfil = JSON.parse(
+        localStorage.getItem("perfilNexora_" + sesion.correo) || "null"
+    ) || {};
+
+    const nombre = perfil.nombre || sesion.nombre || "Usuario";
+    const profesion = perfil.profesion || "Miembro de NEXORA";
+    const inicial = nombre.charAt(0).toUpperCase();
+
+    document.getElementById("userName").textContent = nombre;
+    document.getElementById("profileName").textContent = nombre;
+
+    document.getElementById("welcomeName").textContent =
+        nombre.split(" ")[0];
+
+    document.getElementById("profileProfession").textContent = profesion;
+
+    const userPhoto = document.getElementById("userPhoto");
+    const profilePhoto = document.getElementById("profilePhoto");
+
+    const userInitial = document.getElementById("userInitial");
+    const profileInitial = document.getElementById("profileInitial");
+
+    userInitial.textContent = inicial;
+    profileInitial.textContent = inicial;
+
+    if (perfil.foto) {
+        userPhoto.src = perfil.foto;
+        profilePhoto.src = perfil.foto;
+
+        userPhoto.style.display = "block";
+        profilePhoto.style.display = "block";
+
+        userInitial.style.display = "none";
+        profileInitial.style.display = "none";
+    } else {
+        userPhoto.style.display = "none";
+        profilePhoto.style.display = "none";
+
+        userInitial.style.display = "grid";
+        profileInitial.style.display = "grid";
+    }
+
+    document.getElementById("logoutButton").addEventListener("click", () => {
+        localStorage.removeItem("sesionNexora");
+        window.location.href = "login.html";
+    });
+
+    const publishButton = document.getElementById("publishButton");
+    const postContent = document.getElementById("postContent");
+    const postsContainer = document.getElementById("postsContainer");
+
+    function obtenerPublicaciones() {
+        return JSON.parse(
+            localStorage.getItem("publicacionesNexora") || "[]"
+        );
+    }
+
+    function mostrarPublicaciones() {
+        const publicaciones = obtenerPublicaciones();
+        postsContainer.innerHTML = "";
+
+        publicaciones.forEach(publicacion => {
+            const article = document.createElement("article");
+            article.className = "post";
+
+            const author = document.createElement("h4");
+            author.textContent = publicacion.nombre || "Usuario NEXORA";
+
+            const profession = document.createElement("p");
+            profession.className = "muted";
+            profession.textContent =
+                publicacion.profesion || "Miembro de NEXORA";
+
+            const content = document.createElement("p");
+            content.textContent = publicacion.texto || "";
+
+            article.append(author, profession, content);
+            postsContainer.appendChild(article);
+        });
+
+        const propias = publicaciones.filter(
+            p => p.correo === sesion.correo
+        );
+
+        document.getElementById("publicationCount").textContent =
+            propias.length;
+    }
+
+    const solicitudes = JSON.parse(
+        localStorage.getItem("solicitudesNexora_" + sesion.correo) || "[]"
+    );
+
+    document.getElementById("connectionCount").textContent =
+        solicitudes.length;
+
+    publishButton.addEventListener("click", () => {
+        const texto = postContent.value.trim();
+
+        if (!texto) {
+            alert("Escribe algo antes de publicar.");
+            return;
+        }
+
+        const publicaciones = obtenerPublicaciones();
+
+        publicaciones.unshift({
+            id: Date.now().toString(),
+            nombre: nombre,
+            correo: sesion.correo,
+            profesion: profesion,
+            texto: texto,
+            fecha: new Date().toLocaleString("es-PE"),
+            likes: []
+        });
+
+        localStorage.setItem(
+            "publicacionesNexora",
+            JSON.stringify(publicaciones)
+        );
+
+        postContent.value = "";
+        mostrarPublicaciones();
+
+        alert("¡Tu publicación se realizó correctamente!");
+    });
+
+    mostrarPublicaciones();
+}
+</script>
+
+</body>
+</html>
+

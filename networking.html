@@ -1,0 +1,534 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Networking | NEXORA</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #F6F1E9;
+            color: #263535;
+        }
+
+        header {
+            background: #1F5A5A;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        header a:hover {
+            color: #D98E5B;
+        }
+
+        main {
+            max-width: 1150px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .intro {
+            margin-bottom: 25px;
+        }
+
+        .intro h1 {
+            color: #1F5A5A;
+            margin-bottom: 10px;
+        }
+
+        .intro p {
+            color: #687575;
+        }
+
+        .search-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            outline-color: #1F5A5A;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+
+        .section-title {
+            margin-bottom: 15px;
+            color: #1F5A5A;
+        }
+
+        .person-card,
+        .side-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 12px rgba(0,0,0,.04);
+        }
+
+        .person-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #1F5A5A;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 20px;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+        }
+
+        .person-info h3 {
+            margin-bottom: 5px;
+            color: #263535;
+        }
+
+        .person-info p,
+        .description {
+            color: #718080;
+            font-size: 14px;
+        }
+
+        .description {
+            line-height: 1.5;
+            margin-bottom: 15px;
+            white-space: pre-line;
+        }
+
+        .connect-btn {
+            background: #1F5A5A;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        .connect-btn:hover {
+            background: #164444;
+        }
+
+        .connect-btn.sent {
+            background: #D98E5B;
+            cursor: default;
+        }
+
+        .side-card h3 {
+            color: #1F5A5A;
+            margin-bottom: 12px;
+        }
+
+        .side-card p {
+            color: #687575;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .empty {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            color: #718080;
+            text-align: center;
+        }
+
+        @media (max-width: 750px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                padding: 18px 5%;
+            }
+
+            header nav {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            header a {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">NEXORA</div>
+
+    <nav>
+        <a href="dashboard.html">Inicio</a>
+        <a href="perfil.html">Mi perfil</a>
+        <a href="networking.html">Networking</a>
+    </nav>
+</header>
+
+<main>
+
+    <section class="intro">
+        <h1>Conecta con profesionales</h1>
+        <p>Amplía tu red de contactos y encuentra personas con intereses profesionales similares.</p>
+    </section>
+
+    <section class="search-box">
+        <input
+            type="text"
+            id="buscador"
+            placeholder="Buscar por nombre, profesión o especialidad..."
+        >
+    </section>
+
+    <div class="layout">
+
+        <section>
+            <h2 class="section-title">Personas que podrías conocer</h2>
+            <div id="listaPersonas"></div>
+        </section>
+
+        <aside>
+            <div class="side-card">
+                <h3>Mis conexiones</h3>
+                <p id="totalConexiones">
+                    Todavía no has enviado solicitudes.
+                </p>
+            </div>
+
+            <div class="side-card">
+                <h3>Construye tu red</h3>
+                <p>
+                    Conectar con otros estudiantes y profesionales te permite
+                    compartir conocimientos, conocer nuevas oportunidades y
+                    desarrollar tu perfil profesional.
+                </p>
+            </div>
+        </aside>
+
+    </div>
+
+</main>
+
+<script>
+    // Verificar sesión
+    const sesion = JSON.parse(
+        localStorage.getItem("sesionNexora")
+    );
+
+    if (!sesion) {
+        window.location.href = "login.html";
+    }
+
+    // Perfiles de ejemplo
+    const personasEjemplo = [
+        {
+            nombre: "Valeria Mendoza",
+            profesion: "Diseñadora UX/UI",
+            especialidad: "Experiencia de usuario",
+            descripcion: "Interesada en crear experiencias digitales accesibles y fáciles de utilizar.",
+            foto: "imagen/valeria_mendoza.png"
+        },
+        {
+            nombre: "Carlos Ramírez",
+            profesion: "Desarrollador de software",
+            especialidad: "Desarrollo web",
+            descripcion: "Apasionado por la tecnología, programación y creación de soluciones digitales.",
+            foto: "imagen/carlos_ramirez.png"
+        },
+        {
+            nombre: "Andrea Torres",
+            profesion: "Estudiante de Ingeniería",
+            especialidad: "Gestión de proyectos",
+            descripcion: "Busco compartir conocimientos y colaborar en proyectos innovadores.",
+            foto: "imagen/andrea_torres.png"
+        },
+        {
+            nombre: "Diego Fernández",
+            profesion: "Analista de datos",
+            especialidad: "Inteligencia de negocios",
+            descripcion: "Interesado en transformar datos en información útil para las organizaciones.",
+            foto: "imagen/diego_fernandez.png"
+        },
+        {
+            nombre: "Lucía Herrera",
+            profesion: "Community Manager",
+            especialidad: "Marketing digital",
+            descripcion: "Me especializo en comunicación digital y estrategias para redes sociales.",
+            foto: "imagen/lucia_herrera.png"
+        }
+    ];
+
+    // Obtener usuarios registrados
+    function obtenerUsuariosRegistrados() {
+        const usuarios = [];
+
+        for (let i = 0; i < localStorage.length; i++) {
+            const clave = localStorage.key(i);
+
+            if (clave && clave.startsWith("perfilNexora_")) {
+                try {
+                    const perfil = JSON.parse(
+                        localStorage.getItem(clave)
+                    );
+
+                    if (!perfil) continue;
+
+                    const correo = clave.replace("perfilNexora_", "");
+
+                    if (correo === sesion.correo) continue;
+
+                    usuarios.push({
+                        nombre: perfil.nombre || perfil.nombreCompleto || correo.split("@")[0],
+                        correo: correo,
+                        profesion: perfil.profesion || "Profesional",
+                        especialidad: perfil.especialidad || "Sin especialidad registrada",
+                        descripcion: perfil.descripcion || "Usuario registrado en la comunidad NEXORA.",
+                        foto: perfil.foto || ""
+                    });
+
+                } catch (error) {
+                    console.log("Error al leer el perfil:", error);
+                }
+            }
+        }
+
+        return usuarios;
+    }
+
+    // Combinar perfiles
+    function obtenerPersonas() {
+        const registrados = obtenerUsuariosRegistrados();
+
+        const personas = personasEjemplo.map(persona => {
+            const coincidencia = registrados.find(usuario =>
+                usuario.nombre.toLowerCase() === persona.nombre.toLowerCase()
+            );
+
+            if (coincidencia) {
+                return {
+                    ...persona,
+                    ...coincidencia,
+                    foto: coincidencia.foto || persona.foto
+                };
+            }
+
+            return persona;
+        });
+
+        registrados.forEach(usuario => {
+            const yaExiste = personas.some(persona =>
+                persona.correo && persona.correo === usuario.correo
+            );
+
+            if (!yaExiste) {
+                personas.push(usuario);
+            }
+        });
+
+        return personas;
+    }
+
+    // Solicitudes de conexión
+    const claveSolicitudes = "solicitudesNexora_" + sesion.correo;
+
+    let solicitudes = JSON.parse(
+        localStorage.getItem(claveSolicitudes)
+    ) || [];
+
+    const lista = document.getElementById("listaPersonas");
+    const buscador = document.getElementById("buscador");
+
+    // Mostrar personas
+    function mostrarPersonas(filtro = "") {
+        lista.innerHTML = "";
+
+        const personas = obtenerPersonas();
+
+        const resultados = personas.filter(persona =>
+            (
+                persona.nombre + " " +
+                persona.profesion + " " +
+                persona.especialidad
+            ).toLowerCase().includes(filtro.toLowerCase())
+        );
+
+        if (resultados.length === 0) {
+            lista.innerHTML = `
+                <div class="empty">
+                    No se encontraron profesionales.
+                </div>
+            `;
+            return;
+        }
+
+        resultados.forEach(persona => {
+            const identificador = persona.correo || persona.nombre;
+            const enviada = solicitudes.includes(identificador);
+
+            const tarjeta = document.createElement("article");
+            tarjeta.className = "person-card";
+
+            const encabezado = document.createElement("div");
+            encabezado.className = "person-header";
+
+            const avatar = document.createElement("div");
+            avatar.className = "avatar";
+
+            if (persona.foto) {
+                const imagen = document.createElement("img");
+
+                imagen.src = persona.foto;
+                imagen.alt = "Foto de " + persona.nombre;
+
+                imagen.onerror = function() {
+                    avatar.innerHTML = "";
+                    avatar.textContent = persona.nombre.charAt(0).toUpperCase();
+                };
+
+                avatar.appendChild(imagen);
+            } else {
+                avatar.textContent = persona.nombre.charAt(0).toUpperCase();
+            }
+
+            const informacion = document.createElement("div");
+            informacion.className = "person-info";
+
+            const nombre = document.createElement("h3");
+            nombre.textContent = persona.nombre;
+
+            const profesion = document.createElement("p");
+            profesion.textContent = persona.profesion;
+
+            informacion.appendChild(nombre);
+            informacion.appendChild(profesion);
+
+            encabezado.appendChild(avatar);
+            encabezado.appendChild(informacion);
+
+            const descripcion = document.createElement("p");
+            descripcion.className = "description";
+
+            const especialidad = document.createElement("strong");
+            especialidad.textContent = "Especialidad: ";
+
+            descripcion.appendChild(especialidad);
+
+            descripcion.appendChild(
+                document.createTextNode(
+                    persona.especialidad + "\n\n" + persona.descripcion
+                )
+            );
+
+            const boton = document.createElement("button");
+            boton.className = "connect-btn";
+
+            if (enviada) {
+                boton.classList.add("sent");
+                boton.textContent = "Solicitud enviada";
+                boton.disabled = true;
+            } else {
+                boton.textContent = "Conectar";
+
+                boton.addEventListener("click", () => {
+                    if (!solicitudes.includes(identificador)) {
+                        solicitudes.push(identificador);
+
+                        localStorage.setItem(
+                            claveSolicitudes,
+                            JSON.stringify(solicitudes)
+                        );
+                    }
+
+                    mostrarPersonas(buscador.value);
+                    actualizarConexiones();
+                });
+            }
+
+            tarjeta.appendChild(encabezado);
+            tarjeta.appendChild(descripcion);
+            tarjeta.appendChild(boton);
+
+            lista.appendChild(tarjeta);
+        });
+    }
+
+    // Actualizar conexiones
+    function actualizarConexiones() {
+        const total = document.getElementById("totalConexiones");
+
+        if (solicitudes.length === 0) {
+            total.textContent = "Todavía no has enviado solicitudes.";
+        } else {
+            total.textContent =
+                "Has enviado " + solicitudes.length +
+                " solicitud(es) de conexión.";
+        }
+    }
+
+    // Buscador
+    buscador.addEventListener("input", () => {
+        mostrarPersonas(buscador.value);
+    });
+
+    // Inicializar
+    mostrarPersonas();
+    actualizarConexiones();
+
+</script>
+
+</body>
+</html>
+
